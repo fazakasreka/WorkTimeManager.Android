@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavigationStyle">
+        <item name="android:theme">@style/BottomNavigationStyle</item>
+        <item name="itemTextAppearance">@style/TextAppearanceCaption</item>
+        <item name="labelVisibilityMode">selected</item>
+        <item name="materialThemeOverlay">@style/BottomNavigationStyle.ThemeOverlay</item>
+    </style>
+
+    <style name="BottomNavigationStyle.ThemeOverlay" parent="ThemeOverlay.MaterialComponents">
+        <item name="colorDefault">@color/bottom_nav_text_deselected</item>
+        <item name="colorSelected">@color/bottom_nav_text</item>
+    </style>
+
+</resources>

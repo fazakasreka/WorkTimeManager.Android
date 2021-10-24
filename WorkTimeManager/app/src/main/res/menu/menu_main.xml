@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="hu.bme.spacedumpling.worktimemanager.presentation.activity.WorkTimeManagerMainActivity">
+
+    <item
+        android:id="@id/statisticsFragment"
+        android:icon="@drawable/ic_statistics"
+        android:menuCategory="secondary"
+        android:title="@string/statistics_title" />
+
+    <item
+        android:id="@id/dashboardFragment"
+        android:icon="@drawable/ic_home"
+        android:menuCategory="secondary"
+        android:title="@string/dashboard_title" />
+
+
+    <item
+        android:id="@id/projectsFragment"
+        android:icon="@drawable/ic_project"
+        android:menuCategory="secondary"
+        android:title="@string/projects_title" />
+</menu>

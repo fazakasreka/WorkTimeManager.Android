@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/accent_background">
+
+        <TextView
+            android:id="@+id/dashboard_hello"
+            android:textAppearance="@style/TextAppearanceHeadline4.Bold"
+            android:padding="@dimen/spacing_default"
+            android:textColor="@color/negative_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:text = "Szia, Reka!"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

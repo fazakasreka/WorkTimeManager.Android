@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WorkTimeManager</string>
+    <string name="dashboard_title">home</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="statistics_title">statistics</string>
+    <string name="projects_title">projects</string>
 </resources>
