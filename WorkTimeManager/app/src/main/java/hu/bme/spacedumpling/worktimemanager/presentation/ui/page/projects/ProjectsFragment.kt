@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import hu.bitraptors.recyclerview.genericlist.GenericListInteractionListener
 import hu.bme.spacedumpling.worktimemanager.R
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.recylerview.setupClickableRecyclerView
 import hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.cells.testDelegate

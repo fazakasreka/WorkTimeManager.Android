@@ -2,7 +2,6 @@ package hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.cells
 
 import androidx.core.content.ContextCompat
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
-import hu.bitraptors.recyclerview.genericlist.GenericListInteractionListener
 import hu.bitraptors.recyclerview.genericlist.GenericListItem
 import hu.bme.spacedumpling.worktimemanager.databinding.CellTestBinding
 import hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.presentationmodels.TestItem
