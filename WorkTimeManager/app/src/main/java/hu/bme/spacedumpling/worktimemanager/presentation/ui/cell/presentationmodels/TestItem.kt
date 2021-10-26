@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.presentation.cell.presentationmodels
+package hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.presentationmodels
 
 import androidx.annotation.DrawableRes
 import hu.bitraptors.recyclerview.genericlist.GenericListItem

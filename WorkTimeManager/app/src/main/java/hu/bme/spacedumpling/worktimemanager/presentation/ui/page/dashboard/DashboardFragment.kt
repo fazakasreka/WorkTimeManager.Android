@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.presentation.page.dashboard
+package hu.bme.spacedumpling.worktimemanager.presentation.ui.page.dashboard
 
 import androidx.fragment.app.Fragment
 import hu.bme.spacedumpling.worktimemanager.R

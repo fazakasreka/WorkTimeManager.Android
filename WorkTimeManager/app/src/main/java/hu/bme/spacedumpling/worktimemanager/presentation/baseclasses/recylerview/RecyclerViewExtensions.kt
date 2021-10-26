@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.logic.recylerview
+package hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.recylerview
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
@@ -12,6 +12,20 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+
+
+fun setupRecyclerView(
+    recyclerView: RecyclerView,
+    layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(recyclerView.context),
+    clickChannel: BroadcastChannel<Any>? = null,
+    vararg delegates: AdapterDelegate<List<GenericListItem>>,
+): GenericListAdapter {
+    val chanel = clickChannel ?: BroadcastChannel(Channel.BUFFERED)
+    val itemsListAdapter = GenericListAdapter(chanel, *delegates)
+    recyclerView.layoutManager = layoutManager
+    recyclerView.adapter = itemsListAdapter
+    return itemsListAdapter
+}
 
 fun Fragment.setupRecyclerView(
     recyclerView: RecyclerView,
@@ -58,35 +72,4 @@ inline fun <reified T : Any> Fragment.setupClickableRecyclerView(
     itemsListAdapter.itemClickEvents<T>().onEach{
         onItemClicked(it)
     }.launchIn(lifecycle.coroutineScope)
-}
-
-fun setupRecyclerView(
-    recyclerView: RecyclerView,
-    layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(recyclerView.context),
-    clickChannel: BroadcastChannel<Any>? = null,
-    vararg delegates: AdapterDelegate<List<GenericListItem>>,
-): GenericListAdapter {
-    val chanel = clickChannel ?: BroadcastChannel(Channel.BUFFERED)
-    val itemsListAdapter = GenericListAdapter(chanel, *delegates)
-    recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = itemsListAdapter
-    return itemsListAdapter
-}
-
-/**
- * Set-up recycler view delegates with click listener.
- * @property manager Set only if you didn't set it from xml
- */
-fun RecyclerView.setupWithClickListener(
-    manager: RecyclerView.LayoutManager? = null,
-    delegates: (clickChannel: SendChannel<Any>) -> Array<AdapterDelegate<List<GenericListItem>>>
-): GenericListAdapter {
-    val itemClickOutput = BroadcastChannel<Any>(Channel.BUFFERED)
-    val itemsListAdapter = GenericListAdapter(
-        itemClickOutput, *delegates(itemClickOutput)
-    )
-    // in case we provided manager from xml
-    if (layoutManager == null && manager != null) layoutManager = manager
-    adapter = itemsListAdapter
-    return itemsListAdapter
 }

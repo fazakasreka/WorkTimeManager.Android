@@ -1,12 +1,11 @@
-package hu.bme.spacedumpling.worktimemanager.presentation.page.projects
+package hu.bme.spacedumpling.worktimemanager.presentation.ui.page.projects
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import hu.bitraptors.recyclerview.genericlist.GenericListItem
 import hu.bme.spacedumpling.worktimemanager.R
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.viewmodels.BaseViewModel
-import hu.bme.spacedumpling.worktimemanager.presentation.cell.presentationmodels.TestItem
-import kotlinx.coroutines.flow.asFlow
+import hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.presentationmodels.TestItem
 import kotlinx.coroutines.flow.flowOf
 
 class ProjectViewModel(): BaseViewModel() {

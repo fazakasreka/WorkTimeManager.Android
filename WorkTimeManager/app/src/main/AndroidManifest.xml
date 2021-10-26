@@ -6,12 +6,13 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:name=".WorkTimeManagerApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkTimeManager" >
         <activity
-            android:name=".presentation.activity.WorkTimeManagerMainActivity"
+            android:name="hu.bme.spacedumpling.worktimemanager.presentation.ui.activity.WorkTimeManagerMainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

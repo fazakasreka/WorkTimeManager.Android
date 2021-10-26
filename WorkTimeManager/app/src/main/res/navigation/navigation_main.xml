@@ -7,21 +7,21 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="hu.bme.spacedumpling.worktimemanager.presentation.page.dashboard.DashboardFragment"
+        android:name="hu.bme.spacedumpling.worktimemanager.presentation.ui.page.dashboard.DashboardFragment"
         app:popUpToInclusive="true">
 
     </fragment>
 
     <fragment
         android:id="@+id/projectsFragment"
-        android:name="hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectsFragment"
+        android:name="hu.bme.spacedumpling.worktimemanager.presentation.ui.page.projects.ProjectsFragment"
         app:popUpToInclusive="true">
 
     </fragment>
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="hu.bme.spacedumpling.worktimemanager.presentation.page.statistics.StatisticsFragment"
+        android:name="hu.bme.spacedumpling.worktimemanager.presentation.ui.page.statistics.StatisticsFragment"
         app:popUpToInclusive="true">
     </fragment>
 
