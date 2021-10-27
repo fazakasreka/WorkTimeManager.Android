@@ -5,10 +5,9 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import hu.bitraptors.recyclerview.genericlist.GenericListItem
 import hu.bme.spacedumpling.worktimemanager.databinding.CellTestBinding
 import hu.bme.spacedumpling.worktimemanager.presentation.ui.cell.presentationmodels.TestItem
-import hu.bme.spacedumpling.worktimemanager.util.safeOffer
-import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 
-fun testDelegate(callback: SendChannel<Any>) =
+fun testDelegate(callback: MutableSharedFlow<Any>) =
     adapterDelegateViewBinding<TestItem, GenericListItem, CellTestBinding>(
         viewBinding = { layoutInflater, root ->
             CellTestBinding.inflate(layoutInflater, root, false)
@@ -17,7 +16,7 @@ fun testDelegate(callback: SendChannel<Any>) =
             bind {
                 binding.testIcon.setImageDrawable(ContextCompat.getDrawable(context, item.icon))
                 binding.testText.text = item.title
-                binding.root.setOnClickListener { callback.safeOffer(item) }
+                binding.root.setOnClickListener { callback.tryEmit(item) }
             }
         }
     )

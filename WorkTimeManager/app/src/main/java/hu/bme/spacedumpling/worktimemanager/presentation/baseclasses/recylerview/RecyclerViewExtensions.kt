@@ -11,10 +11,7 @@ import hu.bitraptors.recyclerview.genericlist.fallbackDelegate
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 
 
 fun Fragment.setupRecyclerView(
@@ -37,11 +34,11 @@ fun Fragment.setupRecyclerView(
 inline fun <reified T : Any> Fragment.setupClickableRecyclerView(
     recyclerView: RecyclerView,
     items: LiveData<List<GenericListItem>>,
-    delegates: (clickChannel: SendChannel<Any>) -> Array<AdapterDelegate<List<GenericListItem>>>,
+    delegates: (clickChannel: MutableSharedFlow<Any>) -> Array<AdapterDelegate<List<GenericListItem>>>,
     crossinline onItemClicked: (T) -> Unit
 ) {
     //make clickChannel
-    val clickChannel = BroadcastChannel<Any>(Channel.BUFFERED)
+    val clickChannel = MutableSharedFlow<Any>(1)
 
     //setUpAdapter
     recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
@@ -54,7 +51,7 @@ inline fun <reified T : Any> Fragment.setupClickableRecyclerView(
         }
     )
     //OnClickListener
-    clickChannel.asFlow().filterIsInstance<T>().onEach{
+    clickChannel.filterIsInstance<T>().onEach{
         onItemClicked(it)
     }.launchIn(lifecycle.coroutineScope)
 }
