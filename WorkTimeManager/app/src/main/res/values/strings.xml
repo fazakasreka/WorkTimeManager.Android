@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">WorkTimeManager</string>
-    <string name="dashboard_title">home</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="statistics_title">statistics</string>
-    <string name="projects_title">projects</string>
+
+    <string name="navbar_statistics_title">statistics</string>
+    <string name="navbar_projects_title">projects</string>
+    <string name="navbar_dashboard_title">home</string>
+    <string name="projects_title">Projects</string>
+    <string name="home_title">Home</string>
+    <string name="statistics_title">Statistic</string>
+    <string name="project_description">Description</string>
+    <string name="project_leaders">Leaders</string>
+    <string name="project_tasks">Tasks</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button android:id="@+id/tag_unclickable"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_circular_20rad_80trp"
+    app:backgroundTint="@color/project_cell_task_banner"
+    app:icon="@drawable/ic_task"
+    tools:text=" 5"
+    android:clickable="false"
+    style="@style/DefaultIconButtonStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" />

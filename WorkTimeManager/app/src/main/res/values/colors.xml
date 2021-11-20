@@ -8,6 +8,7 @@
     <color name="primary_text60">@color/color_black60</color>
     <color name="secondary_text">@color/color_blue_green</color>
     <color name="negative_text">@color/color_white</color>
+    <color name="light_text">@color/color_white</color>
 
     <!-- Background -->
     <color name="default_background">@color/light_gray</color>
@@ -29,10 +30,19 @@
 
     <!-- BottomNavigation -->
     <color name="bottom_nav_text">@color/secondary_text</color>
-    <color name="bottom_nav_text_deselected">@color/primary_text40</color>
-    <color name="bottom_nav_background">@color/color_white</color>
+    <color name="bottom_nav_text_deselected">@color/primary_text60</color>
+    <color name="bottom_nav_background">@color/color_white90</color>
     <color name="bottom_nav_outline">@color/color_white</color>
     <color name="bottom_nav_icon">@color/primary_icon</color>
+
+    <!-- Projects -->
+    <color name="project_cell_task_banner">@color/color_burgundy</color>
+    <color name="project_description">@color/color_green</color>
+    <color name="project_task">@color/color_orange</color>
+    <color name="project_leader">@color/color_burgundy</color>
+
+    <!-- Button -->
+    <color name="ripple_default">@color/color_white</color>
 
 
 
@@ -55,6 +65,7 @@
     <color name="color_white40">#66ffffff</color>
     <color name="color_white60">#99ffffff</color>
     <color name="color_white80">#ccffffff</color>
+    <color name="color_white90">#e6ffffff</color>
 
     <color name="light_gray">#EFEFEF</color>
     

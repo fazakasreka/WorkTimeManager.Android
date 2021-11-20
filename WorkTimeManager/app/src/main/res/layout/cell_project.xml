@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/spacing_tighter"
+    android:paddingVertical="@dimen/spacing_tighter"
+    android:paddingHorizontal="@dimen/spacing_default"
     tools:background="@color/default_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/default_corner_size"
         android:padding="@dimen/spacing_tight"
+        android:foreground="?android:attr/selectableItemBackground"
         style="@style/CardView.Light"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +36,24 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
+                android:src="@raw/project_pic"
                 app:layout_constraintDimensionRatio="H,204:90"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside"
-                android:src="@raw/project" />
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <include
+                android:id="@+id/sum_tasks"
+                layout="@layout/layout_task_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/spacing_tighter"
+                android:layout_marginTop="@dimen/spacing_tighter"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"

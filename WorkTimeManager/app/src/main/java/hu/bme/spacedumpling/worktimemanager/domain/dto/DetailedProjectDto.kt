@@ -4,25 +4,29 @@ import hu.bme.spacedumpling.worktimemanager.logic.models.Project
 import hu.bme.spacedumpling.worktimemanager.logic.models.Task
 import hu.bme.spacedumpling.worktimemanager.logic.models.User
 
-data class SimpleProjectDto (
+data class DetailedProjectDto (
     val id: Int,
     val name: String?,
     val description: String?,
     val sumTasks: Int?,
-    val leaders: List<SimpleUserDto>?
+    val leaders: List<SimpleUserDto>?,
+    val allUsers: List<SimpleUserDto>?,
+    val tasks: List<TaskDto>?,
 )
 
-//fun SimpleProjectDto.toModelProject() :Project{
+//fun DetailedProjectDto.toModelProject(): Project {
 //    return Project(
 //        id = this.id,
 //        title = this.name,
 //        description = this.description,
 //        sumTasks = this.sumTasks,
-//        leaders = this.leaders?.map {it.toModelUser()},
+//        leaders = this.leaders?.map { it.toModelUser()},
+//        allUsers = this.allUsers?.map { it.toModelUser()},
+//        tasks = this.tasks?.map { it.toModelTask()}
 //    )
 //}
 
-fun SimpleProjectDto.toModelProject() :Project{
+fun DetailedProjectDto.toModelProject(): Project {
     return Project(
         id = 1,
         title = "MyProject",
@@ -31,6 +35,16 @@ fun SimpleProjectDto.toModelProject() :Project{
         leaders = listOf(
             User("Berni", 1),
             User("Reka", 2)
-        )
+        ),
+        allUsers = listOf(
+            User("Berni", 1),
+            User("Reka", 2),
+            User("Banczik", 3)
+        ),
+        tasks = listOf(
+            Task("Do shit 1 sdnsdfghjyesfd sdfbnhmj", 1, "Lol lol lol lol lol"),
+            Task("Do shit 2 dghmj,k.lhfd ht n", 2,"Lol lol lol lol lol"),
+            Task("Do shit 3   dfhghmj,", 4,"Lol lol lol lol lol"),
+        ),
     )
 }
