@@ -5,12 +5,15 @@ import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
 
 
-class GenericListAdapter(
-    vararg adapters: AdapterDelegate<List<GenericListItem>>
-) : ListDelegationAdapter<List<GenericListItem>>(*adapters) {
+interface GenericListAdapter {
 
-    fun updateData(list: List<GenericListItem>) {
-        items = list
-        this.notifyDataSetChanged()
-    }
+    val listItems: List<GenericListItem>
+
+    val itemsCount: Int
+
+    fun updateData(list: List<GenericListItem>)
+    fun notifyItemUpdate(pos: Int)
+
+    fun addDelegates(vararg delegates: AdapterDelegate<List<GenericListItem>>)
+    fun setFallbackDelegate(delegate: AdapterDelegate<List<GenericListItem>>)
 }

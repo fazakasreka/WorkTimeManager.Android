@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.presentation.ui.activity
+package hu.bme.spacedumpling.worktimemanager.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

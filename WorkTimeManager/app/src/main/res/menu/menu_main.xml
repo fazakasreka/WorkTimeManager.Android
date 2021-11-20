@@ -2,7 +2,7 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.ui.activity.WorkTimeManagerMainActivity">
+    tools:context=".android.WorkTimeManagerMainActivity">
 
     <item
         android:id="@id/statisticsFragment"

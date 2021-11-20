@@ -14,6 +14,7 @@
     <color name="default_background_light">@color/color_white</color>
     <color name="header_background">@color/color_blue_green</color>
     <color name="accent_background">@color/color_blue_green</color>
+    <color name="card_background">@color/color_white</color>
 
     <!-- Icon -->
     <color name="primary_icon">@color/color_blue_green</color>
