@@ -26,6 +26,7 @@ data class DetailedProjectDto (
 //    )
 //}
 
+
 fun DetailedProjectDto.toModelProject(): Project {
     return Project(
         id = 1,

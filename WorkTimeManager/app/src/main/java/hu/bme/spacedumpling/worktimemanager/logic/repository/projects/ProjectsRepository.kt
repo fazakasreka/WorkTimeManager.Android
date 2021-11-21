@@ -7,4 +7,5 @@ interface ProjectsRepository {
     val projectList: Flow<List<Project>>
     fun fetchProjectList()
     fun fetchProjectDetails(id: Int)
+    fun updateProject(project: Project)
 }

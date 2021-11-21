@@ -33,6 +33,9 @@ class ProjectDetailsViewModel(
                     is PageReloadRequest -> {
                         projectsRepository.fetchProjectDetails(projectId)
                     }
+                    is UpdateProject -> {
+                        projectsRepository.updateProject(it.project)
+                    }
                 }
             }
         }

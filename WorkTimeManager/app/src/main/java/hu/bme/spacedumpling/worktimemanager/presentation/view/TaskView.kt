@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import hu.bme.spacedumpling.worktimemanager.databinding.ViewTaskBinding
+import hu.bme.spacedumpling.worktimemanager.logic.models.Task
 
 class TaskView @JvmOverloads constructor(
     context: Context,
@@ -15,9 +16,16 @@ class TaskView @JvmOverloads constructor(
 
     private val binding = ViewTaskBinding.inflate(LayoutInflater.from(context), this, true)
 
+    var task: Task? = null
+
     fun setUp(
-        text: String
+        _task: Task
     ) {
-        binding.tagView.text = " " + text
+        task = _task
+        binding.tagView.text = " " + _task.title
+    }
+
+    fun getTaskOnUI() : Task?{
+        return task
     }
 }

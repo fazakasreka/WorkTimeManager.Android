@@ -39,6 +39,13 @@ class ProjectsRepositoryImpl(
         }
     }
 
+    override fun updateProject(project: Project) {
+        launch(coroutineContext) {
+                networkSource.updateProject(project)
+                networkSource.fetchProject(project.id)
+        }
+    }
+
 
     //helper
     private fun getData() : List<Project>{

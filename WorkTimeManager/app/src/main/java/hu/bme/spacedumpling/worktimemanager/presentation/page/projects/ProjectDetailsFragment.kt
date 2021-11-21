@@ -1,15 +1,24 @@
 package hu.bme.spacedumpling.worktimemanager.presentation.page.projects
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import androidx.core.view.children
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import hu.bme.spacedumpling.worktimemanager.R
+import hu.bme.spacedumpling.worktimemanager.logic.models.Project
+import hu.bme.spacedumpling.worktimemanager.logic.models.Task
+import hu.bme.spacedumpling.worktimemanager.logic.models.User
 import hu.bme.spacedumpling.worktimemanager.presentation.view.TaskView
-import hu.bme.spacedumpling.worktimemanager.presentation.view.UnclickableTagView
-import hu.bme.spacedumpling.worktimemanager.util.invisible
-import hu.bme.spacedumpling.worktimemanager.util.visible
+import hu.bme.spacedumpling.worktimemanager.presentation.view.UserTagView
+import hu.bme.spacedumpling.worktimemanager.util.*
 import kotlinx.android.synthetic.main.fragment_project_details.*
+import okhttp3.internal.parseCookie
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -43,11 +52,11 @@ class ProjectDetailsFragment : Fragment(
                 project_description.setText(project.description)
                 project_task_list.removeAllViews()
                 project.tasks?.forEach {
-                    project_task_list.addView(TaskView(ctx).apply {setUp(it.title)})
+                    project_task_list.addView(TaskView(ctx).apply {setUp(it)})
                 }
                 project_leaders_tags.removeAllViews()
                 project.leaders?.forEach {
-                    project_leaders_tags.addView(UnclickableTagView(ctx).apply { setUp(it.name, R.color.project_leader) })
+                    project_leaders_tags.addView(UserTagView(ctx).apply { setUp(it, R.color.project_leader) })
                 }
             }
         }
@@ -63,6 +72,27 @@ class ProjectDetailsFragment : Fragment(
         }
         project_save_button.setOnClickListener {
             makePageUnEditable()
+            viewModel.UIActionFlow.tryEmit(UpdateProject(getLayoutData()))
+        }
+        project_description_edit_button.setOnClickListener {
+            project_description.isEnabled = true
+            project_description.requestFocus()
+            project_description.showKeyboard()
+            project_description_edit_button.invisible()
+            project_description_done_button.visible()
+        }
+        project_description_done_button.setOnClickListener {
+            project_description.isEnabled = false
+            project_description.hideKeyboard()
+            project_description_edit_button.visible()
+            project_description_done_button.invisible()
+        }
+
+        project_task_add_button.setOnClickListener {
+            showTaskAdderDialog()
+        }
+        project_leaders_add_button.setOnClickListener {
+            showUserPickerDialog()
         }
     }
 
@@ -72,7 +102,6 @@ class ProjectDetailsFragment : Fragment(
         project_description_edit_button.visible()
         project_task_add_button.visible()
         project_leaders_add_button.visible()
-        project_description.isEnabled = true
     }
 
     private fun makePageUnEditable(){
@@ -81,6 +110,110 @@ class ProjectDetailsFragment : Fragment(
         project_description_edit_button.invisible()
         project_task_add_button.invisible()
         project_leaders_add_button.invisible()
-        project_description.isEnabled = false
+    }
+
+    private fun getLayoutData(): Project {
+        return Project(
+            id = args.projectId,
+            description = project_description.text.toString(),
+            tasks = getTasksData(),
+            leaders = getLeadersData()
+
+        )
+    }
+
+    private fun getLeadersData(): List<User>{
+        return project_leaders_tags.children.mapNotNull {
+            (it as? UserTagView)?.getUserOnUI()
+        }.toList()
+    }
+
+    private fun getTasksData(): List<Task>{
+        return project_task_list.children.mapNotNull {
+            (it as? TaskView)?.getTaskOnUI()
+        }.toList()
+    }
+
+    private fun showTaskAdderDialog(){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(context?.getString(R.string.projects_task_add))
+
+        val input = EditText(context)
+        input.gravity = Gravity.CENTER
+        input.setPadding(30)
+        input.setTextSize(20.0f)
+        builder.setView(input)
+
+        builder.setPositiveButton(
+            context?.getString(R.string.projects_ok)
+        ) { dialog, which ->
+            val taskTitle = input.text.toString()
+            addTask(taskTitle)
+        }
+
+        builder.setNegativeButton(
+            context?.getString(R.string.projects_cancel)
+        ) { _, _ ->}
+        builder.show()
+    }
+
+    private fun addTask(title: String){
+        context?.let{ ctx ->
+            project_task_list.addView(TaskView(ctx).apply { setUp(Task(title, -1, null)) })
+        }
+    }
+
+    private fun showUserPickerDialog(){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(context?.getString(R.string.projects_leader_add))
+
+        val project = viewModel.project.value as Project
+        val addableUsers =  project.allUsers?.filter{ user ->
+            getLeadersData().find{ leader ->
+                leader.id == user.id
+            } == null
+        }
+
+        val input = TextView(context)
+        input.gravity = Gravity.CENTER
+        input.setPadding(30)
+        input.setTextSize(20.0f)
+        input.setPadding(20, 70, 20, 20)
+        input.text = if(addableUsers == null)  getString(R.string.project_all_useres_added)
+        else getString(R.string.project_choose_user)
+        input.setTextAppearance(R.style.TextAppearanceBody3)
+        builder.setView(input)
+
+        var pickedUser : User? = null
+        addableUsers?.let { addableUsers ->
+            input.setOnClickListener {
+                input.showDropDownMenu(
+                    addableUsers.map {
+                        it.name
+                    },
+                    { input.text = addableUsers[it].name
+                        pickedUser = addableUsers[it]
+                        input.setTextAppearance(R.style.ChosenUser)
+                    }
+                )
+            }
+        }
+
+        builder.setPositiveButton(
+            context?.getString(R.string.projects_ok)
+        ) { dialog, which ->
+            pickedUser?.let{addUser(it)}
+        }
+
+        builder.setNegativeButton(
+            context?.getString(R.string.projects_cancel)
+        ) { _, _ ->}
+        builder.show()
+    }
+
+    private fun addUser(user: User){
+        context?.let{ ctx ->
+            project_leaders_tags.addView(UserTagView(ctx).apply { setUp(user) })
+        }
     }
 }

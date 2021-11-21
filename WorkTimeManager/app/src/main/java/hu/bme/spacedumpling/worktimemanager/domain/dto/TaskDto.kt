@@ -4,8 +4,8 @@ import hu.bme.spacedumpling.worktimemanager.logic.models.Task
 
 class TaskDto (
     val id: Int,
-    val title: String,
-    val description: String
+    val title: String?,
+    val description: String?
 )
 
 fun TaskDto.toModelTask(): Task{

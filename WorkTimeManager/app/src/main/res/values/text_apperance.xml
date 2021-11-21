@@ -145,4 +145,9 @@
     <style name="TextAppearanceHeadline6.Regular" parent="TextAppearanceHeadline6">
         <item name="android:fontFamily">@font/google_sans_regular</item>
     </style>
+
+    <!-- custum -->
+    <style name="ChosenUser" parent="TextAppearanceBody3.Bold">
+        <item name="android:textColor">@color/project_leader</item>
+    </style>
 </resources>
