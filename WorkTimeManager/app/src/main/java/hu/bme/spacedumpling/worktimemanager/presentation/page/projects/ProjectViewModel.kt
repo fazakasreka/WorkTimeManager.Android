@@ -20,18 +20,10 @@ class ProjectViewModel(
     val projectsRepository: ProjectsRepository
 ): BaseViewModel() {
     //Actions
-    val UIActionFlow = MutableSharedFlow<UIAction>(1)
-
-    private val fragmentActionFlow = MutableSharedFlow<FragmentAction>(1)
-    val fragmentActionLiveData = fragmentActionFlow.asLiveData()
-
     init{
         viewModelScope.launch {
             UIActionFlow.collect{
                 when (it) {
-                    is TestCellClicked -> {
-                        fragmentActionFlow.emit(MakeToast("Item clicked"))
-                    }
                     is PageReloadRequest -> {
                         projectsRepository.fetchProjectList()
                     }

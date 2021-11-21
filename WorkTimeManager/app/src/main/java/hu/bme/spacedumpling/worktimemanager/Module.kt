@@ -10,14 +10,18 @@ import hu.bme.spacedumpling.worktimemanager.domain.api.APIService
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasource
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasourceImpl
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
+import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepository
+import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepositoryImpl
+import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepositoryModel
 import hu.bme.spacedumpling.worktimemanager.logic.repository.projects.ProjectsRepository
 import hu.bme.spacedumpling.worktimemanager.logic.repository.projects.ProjectsRepositoryImpl
-import hu.bme.spacedumpling.worktimemanager.presentation.page.dashboard.DashboardViewModel
+import hu.bme.spacedumpling.worktimemanager.presentation.page.home.HomeViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectDetailsViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.statistics.StatisticsViewModel
 import hu.uni.corvinus.my.app.data.datasources.base.DataSource
 import hu.uni.corvinus.my.app.data.datasources.base.createDataSourceForListBasedObjects
+import hu.uni.corvinus.my.app.data.datasources.base.createDataSourceForNonListBasedObjects
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -26,7 +30,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 enum class DatasourceTypes{
-    PROJECTS
+    PROJECTS,
+    HOME
 }
 
 val workTimeMangerModule = module{
@@ -82,11 +87,25 @@ val workTimeMangerModule = module{
         )
     }
 
+    single<DataSource<HomeRepositoryModel>>(named(DatasourceTypes.HOME.name)) {
+       createDataSourceForNonListBasedObjects(
+           defaultValue = null,
+           sharedPreferences = get(),
+           moshi = get()
+       )
+    }
+
     //repository
     single<ProjectsRepository>{
         ProjectsRepositoryImpl(
             networkSource = get(),
             localDataSource = get(named(DatasourceTypes.PROJECTS.name))
+        )
+    }
+    single<HomeRepository>{
+        HomeRepositoryImpl(
+            networkSource = get(),
+            localDataSource = get(named(DatasourceTypes.HOME.name))
         )
     }
 
@@ -105,7 +124,9 @@ val workTimeMangerModule = module{
         )
     }
     viewModel{
-        DashboardViewModel()
+        HomeViewModel(
+            homeRepository = get()
+        )
     }
     viewModel{
         StatisticsViewModel()

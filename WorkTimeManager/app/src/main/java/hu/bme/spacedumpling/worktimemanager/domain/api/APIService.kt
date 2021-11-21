@@ -1,9 +1,6 @@
 package hu.bme.spacedumpling.worktimemanager.domain.api
 
-import hu.bme.spacedumpling.worktimemanager.domain.dto.DetailedProjectDto
-import hu.bme.spacedumpling.worktimemanager.domain.dto.ProjectUpdateDto
-import hu.bme.spacedumpling.worktimemanager.domain.dto.SimpleProjectDto
-import hu.bme.spacedumpling.worktimemanager.domain.dto.TestItemDto
+import hu.bme.spacedumpling.worktimemanager.domain.dto.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -21,4 +18,7 @@ interface APIService {
 
     @PUT("projects")
     suspend fun updateProject(@Body body: ProjectUpdateDto)
+
+    @GET("projects/tasks")
+    suspend fun getTasksByProjects(): List<TasksByProjectDto>
 }

@@ -17,4 +17,7 @@
     <string name="projects_leader_add">Add leader to project</string>
     <string name="project_all_useres_added">All possible users have been added</string>
     <string name="project_choose_user">Choose user</string>
+    <string name="home_save">Save</string>
+    <string name="home_project">Project</string>
+    <string name="home_task">Task</string>
 </resources>

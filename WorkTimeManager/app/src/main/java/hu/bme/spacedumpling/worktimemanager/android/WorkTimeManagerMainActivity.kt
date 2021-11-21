@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import hu.bme.spacedumpling.worktimemanager.R
+import hu.bme.spacedumpling.worktimemanager.util.switchLightStatusBar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class WorkTimeManagerMainActivity : AppCompatActivity(
@@ -23,5 +24,15 @@ class WorkTimeManagerMainActivity : AppCompatActivity(
 
     private fun setUpNavigation() {
         bottomNavigation.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, dest, _ ->
+            when(dest.id){
+                R.id.projectDetailsFragment -> {
+                    switchLightStatusBar(true)
+                }
+                else -> {
+                    switchLightStatusBar(false)
+                }
+            }
+        }
     }
 }

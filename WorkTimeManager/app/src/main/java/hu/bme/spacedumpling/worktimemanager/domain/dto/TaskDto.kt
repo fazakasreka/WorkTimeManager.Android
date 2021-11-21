@@ -1,9 +1,11 @@
 package hu.bme.spacedumpling.worktimemanager.domain.dto
 
+import com.squareup.moshi.Json
 import hu.bme.spacedumpling.worktimemanager.logic.models.Task
 
 class TaskDto (
     val id: Int,
+    @Json(name = "name")
     val title: String?,
     val description: String?
 )

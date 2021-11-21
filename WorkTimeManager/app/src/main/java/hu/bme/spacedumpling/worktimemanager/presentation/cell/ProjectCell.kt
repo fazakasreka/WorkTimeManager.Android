@@ -7,6 +7,7 @@ import hu.bme.spacedumpling.worktimemanager.databinding.CellProjectBinding
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.actions.UIAction
 import hu.bme.spacedumpling.worktimemanager.presentation.view.UnclickableTagView
+import hu.bme.spacedumpling.worktimemanager.presentation.view.UserTagView
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 class ProjectCell(
@@ -34,7 +35,7 @@ class ProjectCell(
                         binding.projectManagerTags.removeAllViews()
                         item.model.leaders?.forEach{ leader ->
                             binding.projectManagerTags.addView(
-                                UnclickableTagView(context).apply { setUp(leader.name)}
+                                UserTagView(context).apply { setUp(leader)}
                             )
                         }
                         binding.root.setOnClickListener {

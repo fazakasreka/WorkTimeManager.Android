@@ -1,5 +1,6 @@
 package hu.bme.spacedumpling.worktimemanager.domain.dto
 
+import com.squareup.moshi.Json
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
 import hu.bme.spacedumpling.worktimemanager.logic.models.Task
 import hu.bme.spacedumpling.worktimemanager.logic.models.User

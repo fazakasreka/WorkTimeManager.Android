@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="hu.bme.spacedumpling.worktimemanager.presentation.page.dashboard.DashboardFragment"
+        android:name="hu.bme.spacedumpling.worktimemanager.presentation.page.home.HomeFragment"
         app:popUpToInclusive="true">
 
     </fragment>

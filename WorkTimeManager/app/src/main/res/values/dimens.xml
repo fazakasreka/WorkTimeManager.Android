@@ -46,4 +46,6 @@
     <dimen name="TextSize_Button">14sp</dimen>
     <dimen name="TextSize_Overline">12sp</dimen>
     <dimen name="button_bg_padding">6dp</dimen>
+    <dimen name="elevation_default">5dp</dimen>
+    <dimen name="new_time_intervall_card_item_height">60dp</dimen>
 </resources>

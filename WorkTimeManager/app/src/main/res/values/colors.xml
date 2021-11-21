@@ -16,6 +16,7 @@
     <color name="header_background">@color/color_blue_green</color>
     <color name="accent_background">@color/color_blue_green</color>
     <color name="card_background">@color/color_white</color>
+    <color name="card_trp80_background">@color/color_white80</color>
 
     <!-- Icon -->
     <color name="primary_icon">@color/color_blue_green</color>
@@ -41,8 +42,12 @@
     <color name="project_task">@color/color_orange</color>
     <color name="project_leader">@color/color_burgundy</color>
 
-    <!-- Button -->
+    <!-- Widget -->
     <color name="ripple_default">@color/color_white</color>
+    <color name="text_input_bg">@color/color_green_60</color>
+
+    <!-- Home -->
+    <color name="home_project_dropdown">@color/color_green</color>
 
 
 
@@ -73,5 +78,7 @@
     <color name="color_burgundy">#890620</color>
     <color name="color_blue_green">#0F4C5C</color>
     <color name="color_orange">#E07A5F</color>
+    <color name="color_orange_60">#99E07A5F</color>
     <color name="color_green">#5C7457</color>
+    <color name="color_green_60">#995C7457</color>
 </resources>

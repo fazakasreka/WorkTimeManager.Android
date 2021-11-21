@@ -21,11 +21,6 @@ class ProjectDetailsViewModel(
     private val projectsRepository: ProjectsRepository
 ) : BaseViewModel() {
 
-    val UIActionFlow = MutableSharedFlow<UIAction>(1)
-
-    private val fragmentActionFlow = MutableSharedFlow<FragmentAction>(1)
-    val fragmentActionLiveData = fragmentActionFlow.asLiveData()
-
     init{
         viewModelScope.launch {
             UIActionFlow.collect{

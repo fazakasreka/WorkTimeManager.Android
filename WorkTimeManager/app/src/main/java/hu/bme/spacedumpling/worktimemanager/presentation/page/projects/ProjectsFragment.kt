@@ -10,7 +10,6 @@ import hu.bitraptors.recyclerview.setupRecyclerView
 import hu.bme.spacedumpling.worktimemanager.R
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.ProjectCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.TestCell
-import hu.bme.spacedumpling.worktimemanager.presentation.page.dashboard.DashboardFragment
 import kotlinx.android.synthetic.main.fragment_projects.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel

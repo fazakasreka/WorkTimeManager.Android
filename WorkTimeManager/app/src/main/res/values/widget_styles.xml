@@ -42,4 +42,17 @@
     </style>
 
     <dimen name="ctaButtonHeight">64dp</dimen>
+    
+    <style name="TextInputDropdownStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="boxStrokeColor">#FFF</item>
+        <item name="boxCornerRadiusTopStart">@dimen/spacing_default</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/spacing_default</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/spacing_default</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/spacing_default</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textAppearance">@style/TextAppearanceBody1.Bold</item>
+        <item name="boxBackgroundColor">@color/text_input_bg</item>
+    </style>
 </resources>

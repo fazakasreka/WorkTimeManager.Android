@@ -1,12 +1,17 @@
 package hu.bme.spacedumpling.worktimemanager.util
 
+import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Filter
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.core.view.WindowCompat
 import hu.bme.spacedumpling.worktimemanager.R
 
 fun View.visible(){
