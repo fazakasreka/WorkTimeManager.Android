@@ -179,7 +179,7 @@ class ProjectDetailsFragment : Fragment(
         input.setPadding(30)
         input.setTextSize(20.0f)
         input.setPadding(20, 70, 20, 20)
-        input.text = if(addableUsers == null)  getString(R.string.project_all_useres_added)
+        input.text = if(addableUsers.isNullOrEmpty())  getString(R.string.project_all_useres_added)
         else getString(R.string.project_choose_user)
         input.setTextAppearance(R.style.TextAppearanceBody3)
         builder.setView(input)
