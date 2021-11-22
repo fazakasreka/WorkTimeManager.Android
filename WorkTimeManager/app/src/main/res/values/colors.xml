@@ -48,7 +48,12 @@
 
     <!-- Home -->
     <color name="home_project_dropdown">@color/color_green</color>
+    <color name="home_timeinterval_accent">@color/color_orange</color>
+    <color name="home_timeinterval_task">@color/color_green</color>
 
+    <!-- Statistics -->
+    <color name="statistics_text">@color/color_burgundy</color>
+    <color name="statistics_project_text">@color/color_yellow</color>
 
 
     <color name="color_black">#FF000000</color>

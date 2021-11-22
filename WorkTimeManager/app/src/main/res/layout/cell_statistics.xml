@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="@dimen/spacing_tighter"
+    android:paddingHorizontal="@dimen/spacing_default"
+    tools:background="@color/color_blue_green"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/card_background"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/default_corner_size"
+        android:foreground="?android:attr/selectableItemBackground"
+        style="@style/CardView.Light"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_background"
+            android:padding="@dimen/spacing_tight_more"
+            android:paddingBottom="@dimen/spacing_tighter">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/project"
+                style="@style/TextAppearanceHeadline5.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginVertical="@dimen/spacing_loose"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/statistics_text"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="This week" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/interval_sum_time"
+                style="@style/TextAppearanceHeadline4.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:layout_marginEnd="@dimen/spacing_loose"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="4:00" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

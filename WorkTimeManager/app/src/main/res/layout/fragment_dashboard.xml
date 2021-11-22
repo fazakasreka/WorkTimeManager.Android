@@ -10,6 +10,7 @@
             android:id="@+id/dashboard_hello"
             android:textAppearance="@style/TextAppearanceHeadline4.Bold"
             android:padding="@dimen/spacing_default"
+            android:layout_marginStart="@dimen/spacing_tighter"
             android:textColor="@color/negative_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dashboard_hello"
-            android:layout_margin="@dimen/spacing_default"
+            android:layout_marginHorizontal="@dimen/spacing_default"
             android:backgroundTint="@color/card_background"
             android:elevation="@dimen/elevation_default"
             app:cardCornerRadius="@dimen/default_corner_size"
@@ -66,7 +67,7 @@
                             android:foreground="?selectableItemBackgroundBorderless"
                             app:icon="@drawable/ic_save"
                             android:textAllCaps="false"
-                            style="@style/TextAppearance.MaterialComponents.Button"
+                            style="@style/TextAppearanceButton"
                             app:iconTint="@color/negative_icon"
                             android:textColor="@color/negative_text"
                             tools:text="Save"
@@ -128,7 +129,7 @@
                             android:foreground="?selectableItemBackgroundBorderless"
                             app:icon="@drawable/ic_bevasarlokocsi"
                             android:textAllCaps="false"
-                            style="@style/TextAppearance.MaterialComponents.Button"
+                            style="@style/TextAppearanceButton"
                             app:iconTint="@color/negative_icon"
                             android:textColor="@color/negative_text"
                             tools:text="2021.09.20"
@@ -149,10 +150,10 @@
                             android:foreground="?selectableItemBackgroundBorderless"
                             app:icon="@drawable/ic_start"
                             android:textAllCaps="false"
-                            style="@style/TextAppearance.MaterialComponents.Button"
+                            style="@style/TextAppearanceHeadline6.Bold"
                             app:iconTint="@color/negative_icon"
                             android:textColor="@color/negative_text"
-                            tools:text="2021.09.20"
+                            tools:text="10:00"
                             />
 
                         <com.google.android.material.button.MaterialButton
@@ -168,10 +169,10 @@
                             android:foreground="?selectableItemBackgroundBorderless"
                             app:icon="@drawable/ic_end"
                             android:textAllCaps="false"
-                            style="@style/TextAppearance.MaterialComponents.Button"
+                            style="@style/TextAppearanceHeadline6.Bold"
                             app:iconTint="@color/negative_icon"
                             android:textColor="@color/negative_text"
-                            tools:text="2021.09.20"
+                            tools:text="12:00"
                             />
 
 
