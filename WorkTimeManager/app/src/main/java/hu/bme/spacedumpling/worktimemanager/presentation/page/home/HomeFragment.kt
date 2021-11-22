@@ -79,7 +79,11 @@ class HomeFragment: Fragment(
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
                 picker.addOnPositiveButtonClickListener {
-                    //date_picker_button.text = picker
+                    picker.selection?.let{
+                        val date =  Date(it)
+                        date_picker_button.text =date.toString()
+                        timeInterval = timeInterval.copy(date = date)
+                    }
                 }
                 picker.show(requireFragmentManager(), null)
         }
@@ -90,6 +94,10 @@ class HomeFragment: Fragment(
             picker.addOnPositiveButtonClickListener {
                 start_time_picker.text="${picker.hour} : ${picker.minute}"
                 val cal = Calendar.getInstance()
+                cal[Calendar.YEAR] = 1999
+                cal[Calendar.MONTH] = 0
+                cal[Calendar.DAY_OF_MONTH]= 0
+                cal[Calendar.MINUTE] = picker.minute
                 cal[Calendar.HOUR_OF_DAY] = picker.hour
                 cal[Calendar.MINUTE] = picker.minute
                 timeInterval = timeInterval.copy(startTime = cal.time)
@@ -103,6 +111,9 @@ class HomeFragment: Fragment(
             picker.addOnPositiveButtonClickListener {
                 end_time_picker.text="${picker.hour} : ${picker.minute}"
                 val cal = Calendar.getInstance()
+                cal[Calendar.YEAR] = 1999
+                cal[Calendar.MONTH] = 0
+                cal[Calendar.DAY_OF_MONTH]= 0
                 cal[Calendar.HOUR_OF_DAY] = picker.hour
                 cal[Calendar.MINUTE] = picker.minute
                 timeInterval = timeInterval.copy(endTime = cal.time)
@@ -110,5 +121,9 @@ class HomeFragment: Fragment(
             picker.show(requireFragmentManager(), null)
         }
 
+    }
+
+    private fun setUpSaveButton(){
+        viewModel.UIActionFlow.tryEmit(SaveTimeInterval(timeInterval))
     }
 }

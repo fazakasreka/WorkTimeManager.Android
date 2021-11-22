@@ -24,6 +24,9 @@ class HomeViewModel(
                     is ChooseProject -> {
                         _chosenProject.tryEmit(it.tasksByProject)
                     }
+                    is SaveTimeInterval -> {
+                        //todo
+                    }
                 }
             }
         }

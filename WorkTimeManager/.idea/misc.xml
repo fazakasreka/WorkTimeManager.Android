@@ -27,7 +27,7 @@
         <entry key="app/src/main/res/layout/cell_dropdown_item.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/cell_project.xml" value="0.38958333333333334" />
         <entry key="app/src/main/res/layout/cell_test.xml" value="0.286231884057971" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2658514492753623" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_project_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_projects.xml" value="0.165" />
         <entry key="app/src/main/res/layout/layout_banner_tag.xml" value="0.4036458333333333" />
