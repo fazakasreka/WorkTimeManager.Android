@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.domain.dto
+package hu.bme.spacedumpling.worktimemanager.domain.api.dto
 
 import com.squareup.moshi.Json
 import hu.bme.spacedumpling.worktimemanager.logic.models.Task

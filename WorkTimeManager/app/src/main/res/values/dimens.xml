@@ -48,4 +48,5 @@
     <dimen name="button_bg_padding">6dp</dimen>
     <dimen name="elevation_default">5dp</dimen>
     <dimen name="new_time_intervall_card_item_height">60dp</dimen>
+    <dimen name="time_interval_button_height">45dp</dimen>
 </resources>

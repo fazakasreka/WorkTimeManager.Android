@@ -37,7 +37,7 @@
     <color name="bottom_nav_icon">@color/primary_icon</color>
 
     <!-- Projects -->
-    <color name="project_cell_task_banner">@color/color_burgundy</color>
+    <color name="project_cell_accent">@color/color_burgundy</color>
     <color name="project_description">@color/color_green</color>
     <color name="project_task">@color/color_orange</color>
     <color name="project_leader">@color/color_burgundy</color>
@@ -48,12 +48,13 @@
 
     <!-- Home -->
     <color name="home_project_dropdown">@color/color_green</color>
-    <color name="home_timeinterval_accent">@color/color_orange</color>
+    <color name="home_timeinterval_accent">@color/color_blue_green</color>
     <color name="home_timeinterval_task">@color/color_green</color>
 
     <!-- Statistics -->
+    <color name="statistics_card_bg">@color/color_yellow_50</color>
     <color name="statistics_text">@color/color_burgundy</color>
-    <color name="statistics_project_text">@color/color_yellow</color>
+    <color name="statistics_project_text">@color/color_orange</color>
 
 
     <color name="color_black">#FF000000</color>
@@ -80,10 +81,12 @@
     <color name="light_gray">#EFEFEF</color>
     
     <color name="color_yellow">#EEC643</color>
+    <color name="color_yellow_50">#80EEC643</color>
     <color name="color_burgundy">#890620</color>
     <color name="color_blue_green">#0F4C5C</color>
     <color name="color_orange">#E07A5F</color>
     <color name="color_orange_60">#99E07A5F</color>
+    <color name="color_orange_30">#4dE07A5F</color>
     <color name="color_green">#5C7457</color>
     <color name="color_green_60">#995C7457</color>
 </resources>

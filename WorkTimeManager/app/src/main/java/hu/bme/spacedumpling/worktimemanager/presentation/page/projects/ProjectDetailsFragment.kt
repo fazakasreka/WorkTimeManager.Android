@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
@@ -18,7 +19,6 @@ import hu.bme.spacedumpling.worktimemanager.presentation.view.TaskView
 import hu.bme.spacedumpling.worktimemanager.presentation.view.UserTagView
 import hu.bme.spacedumpling.worktimemanager.util.*
 import kotlinx.android.synthetic.main.fragment_project_details.*
-import okhttp3.internal.parseCookie
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -148,7 +148,8 @@ class ProjectDetailsFragment : Fragment(
             context?.getString(R.string.projects_ok)
         ) { dialog, which ->
             val taskTitle = input.text.toString()
-            addTask(taskTitle)
+            if(taskTitle.isNotBlank())addTask(taskTitle)
+            else Toast.makeText(context, getString(R.string.task_name_cant_be_blank), Toast.LENGTH_LONG).show()
         }
 
         builder.setNegativeButton(

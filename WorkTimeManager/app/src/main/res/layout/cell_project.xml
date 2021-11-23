@@ -57,7 +57,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/project_cell_accent"
                 style="@style/TextAppearanceBody1.Bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

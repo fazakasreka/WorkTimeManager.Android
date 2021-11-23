@@ -1,15 +1,12 @@
-package hu.bme.spacedumpling.worktimemanager.domain.dto
+package hu.bme.spacedumpling.worktimemanager.domain.api.dto
 
-import com.squareup.moshi.Json
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
-import hu.bme.spacedumpling.worktimemanager.logic.models.Task
-import hu.bme.spacedumpling.worktimemanager.logic.models.User
 
 data class DetailedProjectDto (
     val id: Int,
     val name: String?,
     val description: String?,
-    val sumTasks: Int?,
+    val sumHours: String?,
     val leaders: List<SimpleUserDto>?,
     val allUsers: List<SimpleUserDto>?,
     val tasks: List<TaskDto>?,
@@ -20,7 +17,7 @@ fun DetailedProjectDto.toModelProject(): Project {
         id = this.id,
         title = this.name,
         description = this.description,
-        sumTasks = this.sumTasks,
+        sumHours = this.sumHours,
         leaders = this.leaders?.map { it.toModelUser()},
         allUsers = this.allUsers?.map { it.toModelUser()},
         tasks = this.tasks?.map { it.toModelTask()}

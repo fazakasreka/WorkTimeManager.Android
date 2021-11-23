@@ -4,14 +4,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import hu.bitraptors.recyclerview.setupRecyclerView
 import hu.bme.spacedumpling.worktimemanager.R
-import hu.bme.spacedumpling.worktimemanager.logic.models.TimeInterval
+import hu.bme.spacedumpling.worktimemanager.logic.models.TimeIntervalInput
+import hu.bme.spacedumpling.worktimemanager.presentation.cell.TimeIntervalCell
+import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.MakeToast
+import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.NavigateToProjectDetails
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.PageReloadRequest
+import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectsFragmentDirections
+import hu.bme.spacedumpling.worktimemanager.util.gone
+import hu.bme.spacedumpling.worktimemanager.util.visible
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,18 +30,65 @@ class HomeFragment: Fragment(
     R.layout.fragment_dashboard
 ) {
     private val viewModel by viewModel<HomeViewModel>()
-    private var timeInterval = TimeInterval()
+    private var timeInterval = TimeIntervalInput()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpTexts()
         setUpPickers()
         setUpTimePickers()
+        setUpList()
+        setUpUserName()
+        setUpLogin()
         reloadPage()
+        subscribeFragmentActions()
+        setUpSaveButton()
+    }
+
+    private fun setUpLogin() {
+        login_button.setOnClickListener {
+            if (username.text != null && password.text != null) {
+                viewModel.UIActionFlow.tryEmit(
+                    Login(
+                        username = username.text.toString(),
+                        password = password.text.toString()
+                    )
+                )
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
+                if (isLoggedIn) {
+                    time_interval_card.visible()
+                    time_intervals_list.visible()
+                    login.gone()
+                } else {
+                    time_interval_card.gone()
+                    time_intervals_list.gone()
+                    login.visible()
+                }
+            }
+        }
     }
 
     private fun reloadPage(){
         viewModel.UIActionFlow.tryEmit(PageReloadRequest())
+    }
+
+    private fun setUpUserName() {
+        viewModel.username.observe(viewLifecycleOwner){
+            it?.let{dashboard_hello.text = getString(R.string.dashboar_hello_name, it)}
+        }
+    }
+
+    private fun setUpList(){
+        this.setupRecyclerView(
+            recyclerView = time_intervals_list,
+            items = viewModel.timeIntervals,
+            delegates = listOf(
+                TimeIntervalCell.getDelegate(viewModel.UIActionFlow),
+            ).toTypedArray(),
+        )
     }
 
     private fun setUpTexts(){
@@ -124,6 +180,18 @@ class HomeFragment: Fragment(
     }
 
     private fun setUpSaveButton(){
-        viewModel.UIActionFlow.tryEmit(SaveTimeInterval(timeInterval))
+        interval_save_button.setOnClickListener {
+            viewModel.UIActionFlow.tryEmit(SaveTimeInterval(timeInterval))
+        }
+    }
+
+    private fun subscribeFragmentActions(){
+        lifecycleScope.launch {
+            viewModel.fragmentActionLiveData.observe(viewLifecycleOwner){
+                when(it){
+                    is MakeToast -> Toast.makeText(context, it.text, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }

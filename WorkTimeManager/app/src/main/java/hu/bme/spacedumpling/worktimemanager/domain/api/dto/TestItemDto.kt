@@ -1,4 +1,4 @@
-package hu.bme.spacedumpling.worktimemanager.domain.dto
+package hu.bme.spacedumpling.worktimemanager.domain.api.dto
 
 import hu.bme.spacedumpling.worktimemanager.logic.models.TestItem
 

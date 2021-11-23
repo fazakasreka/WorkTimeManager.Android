@@ -17,18 +17,85 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
-            android:text = "Szia, Reka!"/>
+            tools:text = "Hello Stranger!"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/login"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingBottom="@dimen/fragment_bottom_padding"
+            android:padding="@dimen/spacing_loosest"
+            >
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/negative_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/pasword_container"
+                    style="@style/TextInput.OutlinedBox"
+                    app:helperText="Username"
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/pasword_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/username_container"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/negative_text"
+                    style="@style/TextInput.OutlinedBox"
+                    app:helperText="Password"
+                    >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pasword_container"
+                    android:text="LOL LOG IN"
+                    android:backgroundTint="@color/color_green"
+                    android:textColor="@color/negative_text"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.cardview.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/time_interval_card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dashboard_hello"
-            android:layout_marginHorizontal="@dimen/spacing_default"
             android:backgroundTint="@color/card_background"
-            android:elevation="@dimen/elevation_default"
             app:cardCornerRadius="@dimen/default_corner_size"
             android:foreground="?android:attr/selectableItemBackground"
             style="@style/CardView.Light"
@@ -126,7 +193,7 @@
                             app:layout_constraintTop_toBottomOf="@id/dashboard_project_picker"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:background="@drawable/bg_circular_20rad_80trp"
-                            android:foreground="?selectableItemBackgroundBorderless"
+                            android:foreground="?selectableItemBackground"
                             app:icon="@drawable/ic_bevasarlokocsi"
                             android:textAllCaps="false"
                             style="@style/TextAppearanceButton"
@@ -178,6 +245,23 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/time_intervals_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="-20dp"
+            android:paddingTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/time_interval_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/cell_time_interval"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:paddingBottom="80dp"/>
 
 
 

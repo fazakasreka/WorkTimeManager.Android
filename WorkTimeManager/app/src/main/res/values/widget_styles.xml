@@ -42,7 +42,8 @@
     </style>
 
     <dimen name="ctaButtonHeight">64dp</dimen>
-    
+    <dimen name="turn_off_0dp">0dp</dimen>
+
     <style name="TextInputDropdownStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
@@ -54,5 +55,41 @@
         <item name="android:textColor">@color/secondary_text</item>
         <item name="android:textAppearance">@style/TextAppearanceBody1.Bold</item>
         <item name="boxBackgroundColor">@color/text_input_bg</item>
+    </style>
+
+    <style name="EditTextStyleFilled" parent="Widget.MaterialComponents.TextInputEditText.FilledBox"
+        xmlns:ns2="http://schemas.android.com/tools" >
+        <item name="android:theme">@style/EditTextStyleFilled</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:paddingStart" ns2:ignore="NewApi">@dimen/turn_off_0dp</item>
+        <item name="android:paddingEnd" ns2:ignore="NewApi">@dimen/turn_off_0dp</item>
+        <item name="android:paddingLeft">@dimen/turn_off_0dp</item>
+        <item name="android:paddingRight">@dimen/turn_off_0dp</item>
+    </style>
+
+    <style name="TextInput.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:theme">@style/TextInput.OutlinedBox</item>
+
+        <item name="boxStrokeColor">@color/color_white</item>
+        <item name="boxStrokeErrorColor">@color/color_burgundy</item>
+        <item name="boxBackgroundColor">@color/color_green_60</item>
+        <item name="android:background">@null</item>
+
+        <item name="android:textColorHint">@color/negative_text</item>
+        <item name="hintTextColor">@color/negative_text</item>
+        <item name="hintTextAppearance">@style/TextAppearanceCaption.Bold</item>
+
+        <item name="materialThemeOverlay">@style/TextInputOutlinedOverlay</item>
+        <item name="editTextStyle">@style/EditTextStyleOutlined</item>
+    </style>
+
+    <style name="EditTextStyleOutlined" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="backgroundColor">@color/color_white90</item>
+        <item name="android:paddingTop">@dimen/spacing_tighter</item>
+        <item name="android:paddingBottom">@dimen/spacing_tighter</item>
+        <item name="android:textColor">@color/negative_text</item>
+    </style>
+
+    <style name="TextInputOutlinedOverlay" parent="">
     </style>
 </resources>

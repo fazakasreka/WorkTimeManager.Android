@@ -31,7 +31,7 @@ class ProjectCell(
                     bind {
                         binding.title.text = item.model.title
                         binding.description.text = item.model.description
-                        binding.sumTasks.tagUnclickable.text = " " + item.model.sumTasks?.toString() ?: "0"
+                        binding.sumTasks.tagUnclickable.text = " " + item.model.sumHours?: "0:00"
                         binding.projectManagerTags.removeAllViews()
                         item.model.leaders?.forEach{ leader ->
                             binding.projectManagerTags.addView(

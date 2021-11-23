@@ -11,7 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/dashboard_header"
+        android:id="@+id/header"
         android:background="@color/header_background">
         <TextView
             android:textAppearance="@style/TextAppearanceHeadline5.Bold"
@@ -25,5 +25,18 @@
             app:layout_constraintTop_toBottomOf="parent"
             android:text = "Statistics"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/statistic_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/cell_statistics"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingBottom="80dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,12 @@
-package hu.bme.spacedumpling.worktimemanager.domain.dto
+package hu.bme.spacedumpling.worktimemanager.domain.api.dto
 
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
-import hu.bme.spacedumpling.worktimemanager.logic.models.Task
-import hu.bme.spacedumpling.worktimemanager.logic.models.User
 
 data class SimpleProjectDto (
     val id: Int,
     val name: String?,
     val description: String?,
-    val sumTasks: Int?,
+    val sumHours: String?,
     val leaders: List<SimpleUserDto>?
 )
 
@@ -18,7 +16,7 @@ fun SimpleProjectDto.toModelProject() :Project{
         id = this.id,
         title = this.name,
         description = this.description,
-        sumTasks = this.sumTasks,
+        sumHours = this.sumHours,
         leaders = this.leaders?.map {it.toModelUser()},
     )
 }

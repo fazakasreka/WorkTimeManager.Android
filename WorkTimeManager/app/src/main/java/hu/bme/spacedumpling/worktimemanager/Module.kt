@@ -9,16 +9,24 @@ import hu.bme.spacedumpling.worktimemanager.android.sharedData
 import hu.bme.spacedumpling.worktimemanager.domain.api.APIService
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasource
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasourceImpl
+import hu.bme.spacedumpling.worktimemanager.logic.login.CallInterceptor
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
+import hu.bme.spacedumpling.worktimemanager.logic.models.SimpleStatistic
+import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsModel
+import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepository
+import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepositoryImpl
 import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepository
 import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepositoryImpl
 import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepositoryModel
 import hu.bme.spacedumpling.worktimemanager.logic.repository.projects.ProjectsRepository
 import hu.bme.spacedumpling.worktimemanager.logic.repository.projects.ProjectsRepositoryImpl
+import hu.bme.spacedumpling.worktimemanager.logic.repository.statistics.StatisticsRepository
+import hu.bme.spacedumpling.worktimemanager.logic.repository.statistics.StatisticsRepositoryImpl
 import hu.bme.spacedumpling.worktimemanager.presentation.page.home.HomeViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectDetailsViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectViewModel
 import hu.bme.spacedumpling.worktimemanager.presentation.page.statistics.StatisticsViewModel
+import hu.bme.spacedumpling.worktimemanager.util.CustomDateAdapter
 import hu.uni.corvinus.my.app.data.datasources.base.DataSource
 import hu.uni.corvinus.my.app.data.datasources.base.createDataSourceForListBasedObjects
 import hu.uni.corvinus.my.app.data.datasources.base.createDataSourceForNonListBasedObjects
@@ -31,22 +39,38 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 enum class DatasourceTypes{
     PROJECTS,
-    HOME
+    HOME,
+    STATISTICS,
+    APP_SETTINGS
 }
 
 val workTimeMangerModule = module{
-    //network
+//NETWORK
+
+
     factory<Moshi> {
         Moshi.Builder().apply {
             add(KotlinJsonAdapterFactory())
+            add(CustomDateAdapter())
         }
             .build()
     }
     factory { MoshiConverterFactory.create(get()) }
 
-    factory {
-        OkHttpClient.Builder().build()
+    single {
+        CallInterceptor(
+            appSettingsRepository = get()
+        )
     }
+
+    factory {
+        val interceptorFactory: CallInterceptor= get()
+        OkHttpClient.Builder()
+            .addInterceptor(interceptorFactory.createHeaderChangingInterceptor())
+            .addInterceptor(interceptorFactory.createHeaderCatcherInterceptor())
+            .build()
+    }
+
     single{
         Retrofit.Builder()
             .client(get()).apply {
@@ -65,14 +89,13 @@ val workTimeMangerModule = module{
         NetworkDatasourceImpl(api = get())
     }
 
-    //localData
+//LOCAL DATA
     factory {
         get<Context>().getSharedPreferences(
             sharedData,
             Context.MODE_PRIVATE
         )
     }
-
 
     single<DataSource<List<Project>>>(named(DatasourceTypes.PROJECTS.name)) {
         createDataSourceForListBasedObjects(
@@ -91,11 +114,34 @@ val workTimeMangerModule = module{
        createDataSourceForNonListBasedObjects(
            defaultValue = null,
            sharedPreferences = get(),
-           moshi = get()
+           moshi = get(),
+           TAG = DatasourceTypes.HOME.name
        )
     }
 
-    //repository
+    single<DataSource<List<SimpleStatistic>>>(named(DatasourceTypes.STATISTICS.name)) {
+        createDataSourceForListBasedObjects(
+            defaultValue = null,
+            typeForHandlingLists = Types.newParameterizedType(
+                List::class.java,
+                SimpleStatistic::class.java
+            ),
+            sharedPreferences = get(),
+            moshi = get(),
+            TAG = DatasourceTypes.STATISTICS.name
+        )
+    }
+
+    single<DataSource<AppSettingsModel>>(named(DatasourceTypes.APP_SETTINGS.name)) {
+        createDataSourceForNonListBasedObjects(
+            defaultValue = null,
+            sharedPreferences = get(),
+            moshi = get(),
+            TAG = DatasourceTypes.APP_SETTINGS.name
+        )
+    }
+
+//REPOSITORY
     single<ProjectsRepository>{
         ProjectsRepositoryImpl(
             networkSource = get(),
@@ -109,9 +155,21 @@ val workTimeMangerModule = module{
         )
     }
 
+    single<StatisticsRepository>{
+        StatisticsRepositoryImpl(
+            networkSource = get(),
+            localDataSource = get(named(DatasourceTypes.STATISTICS.name))
+        )
+    }
+
+    single<AppSettingsRepository>{
+        AppSettingsRepositoryImpl(
+            localDataSource = get(named(DatasourceTypes.APP_SETTINGS.name))
+        )
+    }
 
 
-    //presentation
+//PRESENTATION
     viewModel{
         ProjectViewModel(
             projectsRepository = get()
@@ -125,10 +183,13 @@ val workTimeMangerModule = module{
     }
     viewModel{
         HomeViewModel(
-            homeRepository = get()
+            homeRepository = get(),
+            appSettingsRepository = get()
         )
     }
     viewModel{
-        StatisticsViewModel()
+        StatisticsViewModel(
+            statisticsRepository = get()
+        )
     }
 }

@@ -20,4 +20,7 @@
     <string name="home_save">Save</string>
     <string name="home_project">Project</string>
     <string name="home_task">Task</string>
+    <string name="dashboar_hello_name">Hello %s!</string>
+    <string name="task_name_cant_be_blank">Task name can\'t be blank!</string>
+    <string name="interval_cell_header">%s/%s</string>
 </resources>
