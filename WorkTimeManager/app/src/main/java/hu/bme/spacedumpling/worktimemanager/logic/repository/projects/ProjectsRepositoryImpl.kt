@@ -1,7 +1,9 @@
 package hu.bme.spacedumpling.worktimemanager.logic.repository.projects
 
+import hu.bme.spacedumpling.worktimemanager.android.noConnectionErrorMessage
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasource
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
+import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepository
 import hu.uni.corvinus.my.app.data.datasources.base.DataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +15,8 @@ import kotlin.coroutines.CoroutineContext
 class ProjectsRepositoryImpl(
     override val coroutineContext: CoroutineContext = Dispatchers.IO,
     private val networkSource: NetworkDatasource,
-    private val localDataSource: DataSource<List<Project>>
+    private val localDataSource: DataSource<List<Project>>,
+    private val appSettingsRepository: AppSettingsRepository
 ) : ProjectsRepository, CoroutineScope {
     override val projectList: Flow<List<Project>> = localDataSource.output
 
@@ -23,7 +26,7 @@ class ProjectsRepositoryImpl(
             try{
                 localDataSource.saveData(networkSource.fetchListOfProjects())
             }catch (e: Exception){
-                println("API error")
+                appSettingsRepository.emitNetworkErrorMessage(noConnectionErrorMessage)
             }
         }
     }
@@ -34,7 +37,7 @@ class ProjectsRepositoryImpl(
                 val newProject = networkSource.fetchProject(id)
                 localDataSource.saveData(updateSingleFeedItemInList(getData(), newProject))
             }catch (e: Exception){
-                println("API error")
+                appSettingsRepository.emitNetworkErrorMessage(noConnectionErrorMessage)
             }
         }
     }
@@ -44,6 +47,10 @@ class ProjectsRepositoryImpl(
                 networkSource.updateProject(project)
                 networkSource.fetchProject(project.id)
         }
+    }
+
+    override fun onLogout() {
+        localDataSource.saveData(emptyList())
     }
 
 

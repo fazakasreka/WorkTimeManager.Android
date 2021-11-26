@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="@dimen/spacing_tighter"
+    android:paddingHorizontal="@dimen/spacing_default"
+    android:id="@+id/root"
+    tools:background="@color/default_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/card_background"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/default_corner_size"
+        android:foreground="?android:attr/selectableItemBackground"
+        style="@style/CardView.Light"
+        app:cardUseCompatPadding="true"
+        android:elevation="@dimen/elevation_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_background">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/nothing_pic"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@raw/nothing_pic"
+                app:layout_constraintDimensionRatio="H,150:150"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/empty_text"
+                style="@style/TextAppearanceHeadline6.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/spacing_default"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/secondary_text"
+                app:layout_constraintBottom_toTopOf="@id/empty_tip"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/nothing_pic"
+                android:text="@string/empty_there_are_no_items_on_this_list" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/empty_tip"
+                style="@style/TextAppearanceBody2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginVertical="@dimen/spacing_default"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/primary_text60"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="textEnd"
+                android:paddingHorizontal="@dimen/spacing_loose"
+                app:layout_constraintTop_toBottomOf="@id/empty_text"
+                android:text="@string/nothing_tip" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

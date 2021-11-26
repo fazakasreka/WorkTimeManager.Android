@@ -56,6 +56,9 @@
     <color name="statistics_text">@color/color_burgundy</color>
     <color name="statistics_project_text">@color/color_orange</color>
 
+    <!-- LOgin -->
+    <color name="login_text_bg">@color/color_green_60</color>
+
 
     <color name="color_black">#FF000000</color>
     <color name="color_black5">#08000000</color>

@@ -10,6 +10,8 @@ import hu.bme.spacedumpling.worktimemanager.domain.api.APIService
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasource
 import hu.bme.spacedumpling.worktimemanager.domain.api.NetworkDatasourceImpl
 import hu.bme.spacedumpling.worktimemanager.logic.login.CallInterceptor
+import hu.bme.spacedumpling.worktimemanager.logic.login.LogoutHandler
+import hu.bme.spacedumpling.worktimemanager.logic.login.LogoutHandlerImpl
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
 import hu.bme.spacedumpling.worktimemanager.logic.models.SimpleStatistic
 import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsModel
@@ -145,20 +147,23 @@ val workTimeMangerModule = module{
     single<ProjectsRepository>{
         ProjectsRepositoryImpl(
             networkSource = get(),
-            localDataSource = get(named(DatasourceTypes.PROJECTS.name))
+            localDataSource = get(named(DatasourceTypes.PROJECTS.name)),
+            appSettingsRepository = get()
         )
     }
     single<HomeRepository>{
         HomeRepositoryImpl(
             networkSource = get(),
-            localDataSource = get(named(DatasourceTypes.HOME.name))
+            localDataSource = get(named(DatasourceTypes.HOME.name)),
+            appSettingsRepository = get()
         )
     }
 
     single<StatisticsRepository>{
         StatisticsRepositoryImpl(
             networkSource = get(),
-            localDataSource = get(named(DatasourceTypes.STATISTICS.name))
+            localDataSource = get(named(DatasourceTypes.STATISTICS.name)),
+            appSettingsRepository = get()
         )
     }
 
@@ -168,28 +173,41 @@ val workTimeMangerModule = module{
         )
     }
 
+    single<LogoutHandler>{
+        LogoutHandlerImpl(
+            appSettingsRepository = get(),
+            homeRepository = get(),
+            projectsRepository = get(),
+            statisticsRepository = get()
+        )
+    }
+
 
 //PRESENTATION
     viewModel{
         ProjectViewModel(
-            projectsRepository = get()
+            projectsRepository = get(),
+            appSettingsRepository = get()
         )
     }
     viewModel{ (projectId: Int) ->
         ProjectDetailsViewModel(
             projectId = projectId,
-            projectsRepository = get()
+            projectsRepository = get(),
+            appSettingsRepository = get()
         )
     }
     viewModel{
         HomeViewModel(
             homeRepository = get(),
+            logoutHandler = get(),
             appSettingsRepository = get()
         )
     }
     viewModel{
         StatisticsViewModel(
-            statisticsRepository = get()
+            statisticsRepository = get(),
+            appSettingsRepository = get()
         )
     }
 }

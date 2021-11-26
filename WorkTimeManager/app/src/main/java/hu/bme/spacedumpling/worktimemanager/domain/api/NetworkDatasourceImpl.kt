@@ -47,7 +47,9 @@ class NetworkDatasourceImpl (
     }
 
     override suspend fun saveTimeInterval(timeIntervalInput: TimeIntervalInput) {
-        return api.saveTimeInterval(timeIntervalInput.toTimeIntervalDtoMapper())
+        timeIntervalInput.toTimeIntervalDtoMapper()?.let{
+            return api.saveTimeInterval(it)
+        }
     }
 
 }

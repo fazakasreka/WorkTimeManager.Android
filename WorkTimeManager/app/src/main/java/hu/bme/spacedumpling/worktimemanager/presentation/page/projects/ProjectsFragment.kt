@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import hu.bitraptors.recyclerview.setupRecyclerView
 import hu.bme.spacedumpling.worktimemanager.R
+import hu.bme.spacedumpling.worktimemanager.presentation.cell.NothingCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.ProjectCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.TestCell
 import kotlinx.android.synthetic.main.fragment_projects.*
@@ -40,7 +41,7 @@ class ProjectsFragment: Fragment(
             recyclerView = projects_list,
             items = viewModel.projects,
             delegates = listOf(
-                TestCell.getDelegate(viewModel.UIActionFlow),
+                NothingCell.getDelegate(),
                 ProjectCell.getDelegate(viewModel.UIActionFlow)
             ).toTypedArray(),
         )
@@ -50,7 +51,7 @@ class ProjectsFragment: Fragment(
         lifecycleScope.launch {
             viewModel.fragmentActionLiveData.observe(viewLifecycleOwner){
                 when(it){
-                    is MakeToast -> Toast.makeText(context, it.text, Toast.LENGTH_LONG).show()
+                    is MakeToast -> Toast.makeText(context, it.text, Toast.LENGTH_SHORT).show()
                     is NavigateToProjectDetails -> findNavController().navigate(ProjectsFragmentDirections.toProjectDetailsFragment(it.projectId))
                 }
             }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import hu.bitraptors.recyclerview.genericlist.GenericListItem
+import hu.bme.spacedumpling.worktimemanager.logic.login.LogoutHandler
 import hu.bme.spacedumpling.worktimemanager.logic.models.TasksByProject
 import hu.bme.spacedumpling.worktimemanager.logic.models.TimeIntervalInput
 import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepository
@@ -19,8 +20,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     val homeRepository: HomeRepository,
-    val appSettingsRepository: AppSettingsRepository
-) : BaseViewModel() {
+    val logoutHandler: LogoutHandler,
+    appSettingsRepository: AppSettingsRepository
+) : BaseViewModel(appSettingsRepository) {
     //Actions
     init{
         viewModelScope.launch {
@@ -42,8 +44,8 @@ class HomeViewModel(
                             TimeIntervalInput.ValidationResult.NO_TASK -> {
                                 fragmentActionFlow.tryEmit(MakeToast("Choose task"))
                             }
-                            else -> {
-                                fragmentActionFlow.tryEmit(MakeToast("Else branch"))
+                            TimeIntervalInput.ValidationResult.START_TIME_AFTER_END_TIME -> {
+                                fragmentActionFlow.tryEmit(MakeToast("The starting time should be after the ending time"))
                             }
                         }
                     }
@@ -53,9 +55,16 @@ class HomeViewModel(
                     is Login -> {
                         homeRepository.login(it.username, it.password)
                     }
+                    is Logout -> {
+                        logoutHandler.handleLogout()
+                    }
                 }
             }
         }
+    }
+
+    fun isLoggedIn(): Boolean{
+        return appSettingsRepository.isLoggedIn()
     }
 
     //data for timeinterval saving
@@ -67,4 +76,5 @@ class HomeViewModel(
     val timeIntervals : LiveData<List<GenericListItem>> = homeRepository.timeIntervals.map{ intervals -> intervals.map { TimeIntervalCell(it)}}.asLiveData()
     val username = homeRepository.username.asLiveData()
     val isLoggedIn = appSettingsRepository.isLoggedIn.asLiveData()
+    val loginError = homeRepository.loginError.asLiveData()
 }

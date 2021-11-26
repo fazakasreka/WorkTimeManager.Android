@@ -11,10 +11,17 @@ data class TimeIntervalDto(
     val taskId: Int
 )
 
-fun TimeIntervalInput.toTimeIntervalDtoMapper(): TimeIntervalDto{
-    return TimeIntervalDto(
-        taskId = this.taskId!!,
-        startDate = this.startTime!!,
-        endDate = this.endTime!!
-    )
+fun TimeIntervalInput.toTimeIntervalDtoMapper(): TimeIntervalDto? {
+    val startDate = this.getStartDate()
+    val endDate = this.getEndDate()
+
+    return if (startDate.after(endDate) || taskId == null) {
+        null
+    } else {
+        TimeIntervalDto(
+            taskId = this.taskId,
+            startDate = startDate,
+            endDate = endDate
+        )
+    }
 }

@@ -8,4 +8,5 @@ interface ProjectsRepository {
     fun fetchProjectList()
     fun fetchProjectDetails(id: Int)
     fun updateProject(project: Project)
+    fun onLogout()
 }

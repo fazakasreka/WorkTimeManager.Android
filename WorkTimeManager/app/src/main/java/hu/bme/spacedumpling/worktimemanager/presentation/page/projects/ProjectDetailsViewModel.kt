@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import hu.bme.spacedumpling.worktimemanager.logic.models.Project
+import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepository
 import hu.bme.spacedumpling.worktimemanager.logic.repository.projects.ProjectsRepository
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.actions.FragmentAction
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.actions.UIAction
@@ -18,8 +19,9 @@ import kotlinx.coroutines.launch
 
 class ProjectDetailsViewModel(
     projectId: Int,
-    private val projectsRepository: ProjectsRepository
-) : BaseViewModel() {
+    private val projectsRepository: ProjectsRepository,
+    appSettingsRepository: AppSettingsRepository,
+) : BaseViewModel(appSettingsRepository) {
 
     init{
         viewModelScope.launch {

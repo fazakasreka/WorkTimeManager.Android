@@ -34,6 +34,18 @@ class CallInterceptor (
                 appSettingsRepository.saveCredentials(credentials)
             }
 
+            try {
+                when (response.code) {
+                    500 -> {
+                        appSettingsRepository.emitNetworkErrorMessage("There seems to be an error in the server")
+                    }
+                    408 -> {
+                        appSettingsRepository.emitNetworkErrorMessage("You are not connected to the internet.")
+                    }
+                }
+            } catch (e: Exception) {
+                //the code fetching did not work out, there is nothing we can do at this point
+            }
 
             response
         }

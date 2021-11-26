@@ -45,6 +45,7 @@
     <dimen name="turn_off_0dp">0dp</dimen>
 
     <style name="TextInputDropdownStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="theme">@style/TextInputDropdownStyle</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="boxStrokeColor">#FFF</item>
@@ -56,6 +57,7 @@
         <item name="android:textAppearance">@style/TextAppearanceBody1.Bold</item>
         <item name="boxBackgroundColor">@color/text_input_bg</item>
     </style>
+
 
     <style name="EditTextStyleFilled" parent="Widget.MaterialComponents.TextInputEditText.FilledBox"
         xmlns:ns2="http://schemas.android.com/tools" >
@@ -71,13 +73,14 @@
         <item name="android:theme">@style/TextInput.OutlinedBox</item>
 
         <item name="boxStrokeColor">@color/color_white</item>
-        <item name="boxStrokeErrorColor">@color/color_burgundy</item>
-        <item name="boxBackgroundColor">@color/color_green_60</item>
+        <item name="boxBackgroundColor">@color/login_text_bg</item>
         <item name="android:background">@null</item>
 
         <item name="android:textColorHint">@color/negative_text</item>
         <item name="hintTextColor">@color/negative_text</item>
         <item name="hintTextAppearance">@style/TextAppearanceCaption.Bold</item>
+
+        <item name="helperTextTextColor">@color/negative_text</item>
 
         <item name="materialThemeOverlay">@style/TextInputOutlinedOverlay</item>
         <item name="editTextStyle">@style/EditTextStyleOutlined</item>
@@ -91,5 +94,6 @@
     </style>
 
     <style name="TextInputOutlinedOverlay" parent="">
+        <item name="colorError">@color/color_orange</item>
     </style>
 </resources>

@@ -7,19 +7,20 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import hu.bitraptors.recyclerview.setupRecyclerView
 import hu.bme.spacedumpling.worktimemanager.R
+import hu.bme.spacedumpling.worktimemanager.android.clockFormat
 import hu.bme.spacedumpling.worktimemanager.logic.models.TimeIntervalInput
+import hu.bme.spacedumpling.worktimemanager.presentation.cell.NothingCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.TimeIntervalCell
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.MakeToast
-import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.NavigateToProjectDetails
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.PageReloadRequest
-import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.ProjectsFragmentDirections
 import hu.bme.spacedumpling.worktimemanager.util.gone
+import hu.bme.spacedumpling.worktimemanager.util.invisible
+import hu.bme.spacedumpling.worktimemanager.util.toDate
 import hu.bme.spacedumpling.worktimemanager.util.visible
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ class HomeFragment: Fragment(
     R.layout.fragment_dashboard
 ) {
     private val viewModel by viewModel<HomeViewModel>()
-    private var timeInterval = TimeIntervalInput()
+    private var timeIntervalInput = TimeIntervalInput()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,12 +41,12 @@ class HomeFragment: Fragment(
         setUpList()
         setUpUserName()
         setUpLogin()
-        reloadPage()
         subscribeFragmentActions()
         setUpSaveButton()
     }
 
     private fun setUpLogin() {
+        handleIsLoggedIn(viewModel.isLoggedIn())
         login_button.setOnClickListener {
             if (username.text != null && password.text != null) {
                 viewModel.UIActionFlow.tryEmit(
@@ -56,28 +57,39 @@ class HomeFragment: Fragment(
                 )
             }
         }
+        logut_button.setOnClickListener {
+            viewModel.UIActionFlow.tryEmit(Logout())
+        }
         lifecycleScope.launch {
             viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
-                if (isLoggedIn) {
-                    time_interval_card.visible()
-                    time_intervals_list.visible()
-                    login.gone()
-                } else {
-                    time_interval_card.gone()
-                    time_intervals_list.gone()
-                    login.visible()
-                }
+                handleIsLoggedIn(isLoggedIn)
+            }
+            viewModel.loginError.observe(viewLifecycleOwner){
+                password_container.error = getString(R.string.login_incorrect)
+                username_container.error = getString(R.string.login_incorrect)
             }
         }
     }
 
-    private fun reloadPage(){
-        viewModel.UIActionFlow.tryEmit(PageReloadRequest())
+    private fun handleIsLoggedIn(isLoggedIn:  Boolean){
+        if (isLoggedIn) {
+            loggedInLayoutChange()
+            reloadPage()
+        } else {
+            loggedOutLayoutChange()
+            dashboard_hello.text = getString(R.string.login_hello_stranger)
+        }
     }
 
     private fun setUpUserName() {
         viewModel.username.observe(viewLifecycleOwner){
             it?.let{dashboard_hello.text = getString(R.string.dashboar_hello_name, it)}
+        }
+    }
+
+    private fun setUpSaveButton(){
+        interval_save_button.setOnClickListener {
+            viewModel.UIActionFlow.tryEmit(SaveTimeInterval(timeIntervalInput))
         }
     }
 
@@ -91,14 +103,9 @@ class HomeFragment: Fragment(
         )
     }
 
-    private fun setUpTexts(){
-        interval_save_button.text = getString(R.string.home_save)
-        dashboard_project_picker.hint = getString(R.string.home_project)
-        dashboard_task_picker.hint = getString(R.string.home_task)
-        dashboard_task_picker.isEnabled = false
-    }
 
     private fun setUpPickers(){
+        dashboard_task_picker.isEnabled = false
         lifecycleScope.launch {
             viewModel.tasksByProjects.observe(viewLifecycleOwner) {
                 val items = it
@@ -120,7 +127,7 @@ class HomeFragment: Fragment(
                         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, tasks)
                         (task_list as? AutoCompleteTextView)?.setAdapter(adapter)
                         (task_list as? AutoCompleteTextView)?.setOnItemClickListener { _, _, position, _ ->
-                            timeInterval = timeInterval.copy(taskId = tasks[position].id)
+                            timeIntervalInput = timeIntervalInput.copy(taskId = tasks[position].id)
                         }
                     }
                 }
@@ -129,6 +136,8 @@ class HomeFragment: Fragment(
     }
 
     private fun setUpTimePickers(){
+        refreshSumTime()
+        date_picker_button.text = timeIntervalInput.date.toDate()
         date_picker_button.setOnClickListener {
                 val picker = MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select date")
@@ -137,61 +146,96 @@ class HomeFragment: Fragment(
                 picker.addOnPositiveButtonClickListener {
                     picker.selection?.let{
                         val date =  Date(it)
-                        date_picker_button.text =date.toString()
-                        timeInterval = timeInterval.copy(date = date)
+                        date_picker_button.text =date.toDate()
+                        timeIntervalInput = timeIntervalInput.copy(date = date)
                     }
                 }
                 picker.show(requireFragmentManager(), null)
         }
+        start_time_picker.text = timeFormat(timeIntervalInput.startTimeHour, timeIntervalInput.startTimeMin)
         start_time_picker.setOnClickListener {
-            val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .build()
-            picker.addOnPositiveButtonClickListener {
-                start_time_picker.text="${picker.hour} : ${picker.minute}"
-                val cal = Calendar.getInstance()
-                cal[Calendar.YEAR] = 1999
-                cal[Calendar.MONTH] = 0
-                cal[Calendar.DAY_OF_MONTH]= 0
-                cal[Calendar.MINUTE] = picker.minute
-                cal[Calendar.HOUR_OF_DAY] = picker.hour
-                cal[Calendar.MINUTE] = picker.minute
-                timeInterval = timeInterval.copy(startTime = cal.time)
+            showTimePicker(getString(R.string.interval_atart_picker_text)) { hour, minute ->
+                start_time_picker.text= timeFormat( hour, minute)
+                timeIntervalInput = timeIntervalInput.copy(startTimeHour = hour, startTimeMin = minute)
+                refreshSumTime()
             }
-            picker.show(requireFragmentManager(), null)
         }
+        end_time_picker.text = timeFormat(timeIntervalInput.endTimeHour, timeIntervalInput.endTimeMin)
         end_time_picker.setOnClickListener {
-            val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .build()
-            picker.addOnPositiveButtonClickListener {
-                end_time_picker.text="${picker.hour} : ${picker.minute}"
-                val cal = Calendar.getInstance()
-                cal[Calendar.YEAR] = 1999
-                cal[Calendar.MONTH] = 0
-                cal[Calendar.DAY_OF_MONTH]= 0
-                cal[Calendar.HOUR_OF_DAY] = picker.hour
-                cal[Calendar.MINUTE] = picker.minute
-                timeInterval = timeInterval.copy(endTime = cal.time)
+            showTimePicker(getString(R.string.time_interval_end_time_pick)) { hour, minute ->
+                end_time_picker.text= timeFormat( hour, minute)
+                timeIntervalInput = timeIntervalInput.copy(endTimeHour = hour, endTimeMin = minute)
+                refreshSumTime()
             }
-            picker.show(requireFragmentManager(), null)
         }
 
     }
 
-    private fun setUpSaveButton(){
-        interval_save_button.setOnClickListener {
-            viewModel.UIActionFlow.tryEmit(SaveTimeInterval(timeInterval))
+    private fun showTimePicker(title: String, callback: ((Int, Int,) -> Unit)){
+        val picker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setTitleText(title)
+            .build()
+        picker.addOnPositiveButtonClickListener {
+            callback(picker.hour, picker.minute)
         }
+        picker.show(requireFragmentManager(), null)
+    }
+
+    private fun refreshSumTime(){
+        interval_sum_time.text = timeFormat(timeIntervalInput.hoursBetween(), timeIntervalInput.minutesBetween())
+    }
+
+    private fun timeFormat(hour: Int?, minute: Int?):String{
+        return if(minute == null || hour == null) ""
+        else String.format(clockFormat, hour, minute)
+    }
+
+    private fun setUpTexts(){
+        interval_save_button.text = getString(R.string.home_save)
+        dashboard_project_picker.hint = getString(R.string.home_project)
+        dashboard_task_picker.hint = getString(R.string.home_task)
+        login_button.text = getString(R.string.login_login_button)
+        username_container.helperText = getString(R.string.login_username)
+        password_container.helperText = getString(R.string.login_password)
+        dashboard_pls_login.text = getString(R.string.login_pls_login)
+        dashboard_hello.text = getString(R.string.login_hello_stranger)
+    }
+
+    private fun reloadPage(){
+        viewModel.UIActionFlow.tryEmit(PageReloadRequest())
     }
 
     private fun subscribeFragmentActions(){
         lifecycleScope.launch {
             viewModel.fragmentActionLiveData.observe(viewLifecycleOwner){
                 when(it){
-                    is MakeToast -> Toast.makeText(context, it.text, Toast.LENGTH_LONG).show()
+                    is MakeToast -> Toast.makeText(context, it.text, Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun loggedInLayoutChange(){
+        login_button.gone()
+        logut_button.visible()
+
+        time_interval_card.visible()
+        time_intervals_list.visible()
+
+        dashboard_pls_login.gone()
+        login.gone()
+
+    }
+
+    private fun loggedOutLayoutChange(){
+        login_button.visible()
+        logut_button.invisible()
+
+        time_interval_card.gone()
+        time_intervals_list.gone()
+
+        login.visible()
+        dashboard_pls_login.visible()
     }
 }

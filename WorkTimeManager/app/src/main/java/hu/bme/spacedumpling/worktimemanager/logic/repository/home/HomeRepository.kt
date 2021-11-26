@@ -9,9 +9,11 @@ interface HomeRepository {
     val tasksByProjects : Flow<List<TasksByProject>>
     val username: Flow<String?>
     val timeIntervals: Flow<List<TimeInterval>>
+    val loginError: Flow<Boolean>
     fun fetchTasksByProjects()
     fun fetchHomePage()
     fun deleteTimeInterval(timeIntervalId: Int)
     fun login (username: String, password: String)
     fun saveTimeInterval(timeIntervalInput: TimeIntervalInput)
+    fun onLogout()
 }
