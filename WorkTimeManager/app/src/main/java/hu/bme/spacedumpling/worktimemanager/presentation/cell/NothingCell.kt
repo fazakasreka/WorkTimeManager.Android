@@ -26,7 +26,7 @@ class NothingCell (val showLoginTip : Boolean) : GenericListItem {
                 block = {
                     bind{
                         if(item.showLoginTip) binding.emptyTip.visible()
-                        else binding.emptyTip.invisible()
+                        else binding.emptyTip.gone()
                     }
                 }
             )

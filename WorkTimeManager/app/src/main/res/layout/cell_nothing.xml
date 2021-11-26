@@ -52,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="@dimen/spacing_default"
+                android:layout_marginVertical="@dimen/spacing_default"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:textColor="@color/secondary_text"

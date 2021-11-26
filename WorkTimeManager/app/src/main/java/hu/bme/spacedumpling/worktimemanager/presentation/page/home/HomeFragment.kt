@@ -14,6 +14,7 @@ import hu.bitraptors.recyclerview.setupRecyclerView
 import hu.bme.spacedumpling.worktimemanager.R
 import hu.bme.spacedumpling.worktimemanager.android.clockFormat
 import hu.bme.spacedumpling.worktimemanager.logic.models.TimeIntervalInput
+import hu.bme.spacedumpling.worktimemanager.presentation.cell.HeaderCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.NothingCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.TimeIntervalCell
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.MakeToast
@@ -43,6 +44,19 @@ class HomeFragment: Fragment(
         setUpLogin()
         subscribeFragmentActions()
         setUpSaveButton()
+        intervalCardSetUp()
+    }
+
+    var isOpen = true
+    private fun intervalCardSetUp(){
+        cardChevron.setOnClickListener {
+            isOpen = !isOpen
+            cardChevron.animate().rotationBy(if (isOpen) 180f else -180f)
+                    .setDuration(200).start()
+            if(isOpen) card_bottom.visible()
+            else card_bottom.gone()
+
+            }
     }
 
     private fun setUpLogin() {
@@ -99,6 +113,7 @@ class HomeFragment: Fragment(
             items = viewModel.timeIntervals,
             delegates = listOf(
                 TimeIntervalCell.getDelegate(viewModel.UIActionFlow),
+                HeaderCell.getDelegate()
             ).toTypedArray(),
         )
     }
@@ -140,7 +155,8 @@ class HomeFragment: Fragment(
         date_picker_button.text = timeIntervalInput.date.toDate()
         date_picker_button.setOnClickListener {
                 val picker = MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Select date")
+                    .setTitleText(getString(R.string.select_date))
+                    .setTheme(R.style.ThemeOverlay_App_DatePicker)
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
                 picker.addOnPositiveButtonClickListener {
@@ -192,6 +208,7 @@ class HomeFragment: Fragment(
     }
 
     private fun setUpTexts(){
+        title.text = getString(R.string.time_interval_card_text)
         interval_save_button.text = getString(R.string.home_save)
         dashboard_project_picker.hint = getString(R.string.home_project)
         dashboard_task_picker.hint = getString(R.string.home_task)

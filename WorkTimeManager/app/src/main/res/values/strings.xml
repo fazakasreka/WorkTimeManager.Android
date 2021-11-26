@@ -34,4 +34,6 @@
     <string name="empty_there_are_no_items_on_this_list">There are no items on this list</string>
     <string name="nothing_tip">Try logging in</string>
     <string name="login_incorrect">Incorrect username or password</string>
+    <string name="select_date">Select date</string>
+    <string name="time_interval_card_text">What did you work on?</string>
 </resources>

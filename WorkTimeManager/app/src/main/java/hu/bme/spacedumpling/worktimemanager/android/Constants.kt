@@ -1,7 +1,7 @@
 package hu.bme.spacedumpling.worktimemanager.android
 
 
-const val baseUrl = "https://192.168.8.101:45455/"
+const val baseUrl = "https://192.168.0.100:45455/"
 const val sharedData = "WorkTimeManagerPersistence"
 const val defaultStartHour = 10
 const val defaultStartMinute = 0

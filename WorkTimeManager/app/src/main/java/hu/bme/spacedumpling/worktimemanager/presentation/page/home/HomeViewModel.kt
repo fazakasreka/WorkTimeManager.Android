@@ -10,13 +10,16 @@ import hu.bme.spacedumpling.worktimemanager.logic.models.TimeIntervalInput
 import hu.bme.spacedumpling.worktimemanager.logic.repository.appsettings.AppSettingsRepository
 import hu.bme.spacedumpling.worktimemanager.logic.repository.home.HomeRepository
 import hu.bme.spacedumpling.worktimemanager.presentation.baseclasses.viewmodels.BaseViewModel
+import hu.bme.spacedumpling.worktimemanager.presentation.cell.HeaderCell
 import hu.bme.spacedumpling.worktimemanager.presentation.cell.TimeIntervalCell
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.MakeToast
 import hu.bme.spacedumpling.worktimemanager.presentation.page.projects.PageReloadRequest
+import hu.bme.spacedumpling.worktimemanager.util.weeksAgo
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.util.*
 
 class HomeViewModel(
     val homeRepository: HomeRepository,
@@ -73,7 +76,38 @@ class HomeViewModel(
     val chosenProject = _chosenProject.asLiveData()
 
     //data
-    val timeIntervals : LiveData<List<GenericListItem>> = homeRepository.timeIntervals.map{ intervals -> intervals.map { TimeIntervalCell(it)}}.asLiveData()
+    val timeIntervals : LiveData<List<GenericListItem>> = homeRepository.timeIntervals.map{ intervals ->
+        val list = mutableListOf<GenericListItem>()
+        val thisWeek = mutableListOf<GenericListItem>()
+        val thisMonth = mutableListOf<GenericListItem>()
+        val earlier = mutableListOf<GenericListItem>()
+        intervals.sortedBy { it.startDate }.forEach {
+            it.startDate?.let{ startDate ->
+                val date = Calendar.getInstance()
+                date.time = startDate
+                when {
+                    date.weeksAgo() < 1 -> thisWeek.add(TimeIntervalCell(it))
+                    date.weeksAgo() < 5 -> thisMonth.add(TimeIntervalCell(it))
+                    else -> earlier.add(TimeIntervalCell(it))
+                }
+            }
+        }
+        if(thisWeek.isNotEmpty()){
+            list.add(HeaderCell("This week"))
+            list.addAll(thisWeek)
+        }
+        if(thisMonth.isNotEmpty()){
+            list.add(HeaderCell("This month"))
+            list.addAll(thisMonth)
+        }
+        if(earlier.isNotEmpty()){
+            list.add(HeaderCell("Earlier"))
+            list.addAll(earlier)
+        }
+        list
+    }.asLiveData()
+
+
     val username = homeRepository.username.asLiveData()
     val isLoggedIn = appSettingsRepository.isLoggedIn.asLiveData()
     val loginError = homeRepository.loginError.asLiveData()

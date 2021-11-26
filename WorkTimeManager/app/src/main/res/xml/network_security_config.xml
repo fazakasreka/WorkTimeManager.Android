@@ -2,7 +2,7 @@
 <network-security-config>
     <base-config>
         <trust-anchors>
-            <certificates src="@raw/worktime_cert_kvw"/>
+            <certificates src="@raw/worktime_cert"/>
         </trust-anchors>
     </base-config>
 </network-security-config>

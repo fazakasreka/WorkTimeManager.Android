@@ -96,4 +96,10 @@
     <style name="TextInputOutlinedOverlay" parent="">
         <item name="colorError">@color/color_orange</item>
     </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/accent_background</item>
+        <item name="colorOnPrimary">@color/color_white</item>
+        <!-- Customize text field of the text input mode. -->
+    </style>
 </resources>
