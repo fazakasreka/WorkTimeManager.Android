@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".android.WorkTimeManagerMainActivity">
+
+    <item
+        android:id="@id/statisticsFragment"
+        android:icon="@drawable/ic_statistics"
+        android:menuCategory="secondary"
+        android:title="@string/navbar_statistics_title" />
+
+    <item
+        android:id="@id/dashboardFragment"
+        android:icon="@drawable/ic_home"
+        android:menuCategory="secondary"
+        android:title="@string/navbar_dashboard_title" />
+
+
+    <item
+        android:id="@id/projectsFragment"
+        android:icon="@drawable/ic_project"
+        android:menuCategory="secondary"
+        android:title="@string/navbar_projects_title" />
+</menu>

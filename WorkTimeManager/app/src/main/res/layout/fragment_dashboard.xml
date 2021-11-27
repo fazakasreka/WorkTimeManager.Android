@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent_background">
+
+        <TextView
+            android:id="@+id/dashboard_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tighter"
+            android:padding="@dimen/spacing_default"
+            tools:text="Hello Stranger!"
+            android:textAppearance="@style/TextAppearanceHeadline4.Bold"
+            android:textColor="@color/negative_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
+            android:id="@+id/logut_button"
+            style="@style/IconOnlyButton"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tighter"
+            android:layout_marginBottom="@dimen/spacing_tightest"
+            android:backgroundTint="@android:color/transparent"
+            android:elevation="@dimen/elevation_default"
+            android:background="?selectableItemBackgroundBorderless"
+            android:textAllCaps="false"
+            android:textColor="@color/negative_text"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="@color/negative_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/dashboard_hello"
+            app:layout_constraintTop_toTopOf="@id/dashboard_hello"/>
+
+        <TextView
+            android:id="@+id/dashboard_pls_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tighter"
+            android:padding="@dimen/spacing_default"
+            tools:text="Please log in! :)"
+            android:textAppearance="@style/TextAppearanceHeadline4"
+            android:rotation="-10"
+            android:layout_margin="@dimen/spacing_loosest"
+            android:textColor="@color/color_yellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_hello"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_loosest"
+            android:paddingBottom="@dimen/fragment_bottom_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_container"
+                    style="@style/TextInput.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/spacing_default"
+                    android:backgroundTint="@color/negative_text"
+                    tools:helperText="Username"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/password_container"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/username"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_container"
+                    style="@style/TextInput.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/negative_text"
+                    tools:helperText="Password"
+                    app:errorEnabled="true"
+                    app:endIconTint="@color/negative_icon"
+                    app:endIconMode="password_toggle"
+                    android:layout_marginVertical="@dimen/spacing_default"
+                    app:layout_constraintBottom_toTopOf="@+id/login_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/username_container">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:inputType="textPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/login_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/login_text_bg"
+                    tools:text="Log in"
+                    android:paddingVertical="@dimen/spacing_tighter_more"
+                    android:textColor="@color/negative_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginVertical="@dimen/spacing_default"
+                    app:layout_constraintTop_toBottomOf="@+id/password_container" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/time_interval_card"
+            style="@style/CardView.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_tighter_more"
+            app:cardUseCompatPadding="true"
+            android:layout_marginHorizontal="@dimen/spacing_tighter"
+            android:backgroundTint="@color/card_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/default_corner_size"
+            app:cardPreventCornerOverlap="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_hello"
+            tools:visibility="visible">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_default">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title"
+                            style="@style/TextAppearanceHeadline5.Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/spacing_tighter"
+                            android:layout_marginStart="@dimen/spacing_tighter"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:textColor="@color/secondary_text"
+                            app:layout_constraintEnd_toStartOf="@id/cardChevron"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="What did you work on?" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/cardChevron"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/spacing_tighter"
+                            android:rotation="180"
+                            android:elevation="@dimen/elevation_default"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_chevron"
+                            android:textAllCaps="false"
+                            android:animateLayoutChanges="true"
+                            android:textColor="@color/negative_text"
+                            app:layout_constraintBottom_toBottomOf="@+id/title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/title"
+                            app:layout_constraintTop_toTopOf="@+id/title"
+                            app:tint="@color/primary_icon" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/card_bottom"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingTop="@dimen/spacing_tight"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/title">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/interval_save_button"
+                                    style="@style/TextAppearanceButton"
+                                    android:layout_width="0dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginVertical="@dimen/spacing_tightest"
+                                    android:layout_marginStart="@dimen/spacing_tight"
+                                    android:layout_marginEnd="@dimen/spacing_tighter"
+                                    android:background="@drawable/bg_circular_10rad_80trp"
+                                    android:elevation="@dimen/elevation_default"
+                                    android:foreground="?selectableItemBackgroundBorderless"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/negative_text"
+                                    app:backgroundTint="@color/color_burgundy"
+                                    app:icon="@drawable/ic_save"
+                                    app:iconTint="@color/negative_icon"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/primary_icon"
+                                    tools:text="Save" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/interval_sum_time"
+                                    style="@style/TextAppearanceHeadline4.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="@dimen/spacing_default"
+                                    android:ellipsize="end"
+                                    android:maxLines="3"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/secondary_text"
+                                    app:layout_constraintBottom_toBottomOf="@id/interval_save_button"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="@id/interval_save_button"
+                                    tools:text="4:00" />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/dashboard_project_picker"
+                                    style="@style/TextInputDropdownStyle"
+                                    android:layout_width="0dp"
+                                    android:layout_marginTop="@dimen/spacing_tight"
+                                    android:layout_height="@dimen/new_time_intervall_card_item_height"
+                                    android:layout_marginHorizontal="@dimen/spacing_tightest"
+                                    app:layout_constraintBottom_toTopOf="@id/date_picker_button"
+                                    app:layout_constraintEnd_toStartOf="@id/dashboard_task_picker"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/interval_save_button">
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/project_list"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:inputType="none"
+                                            android:lines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/dashboard_task_picker"
+                                    style="@style/TextInputDropdownStyle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/new_time_intervall_card_item_height"
+                                    android:layout_marginHorizontal="@dimen/spacing_tightest"
+                                    android:layout_marginTop="@dimen/spacing_tight"
+                                    app:layout_constraintBottom_toTopOf="@id/start_time_picker"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/dashboard_project_picker"
+                                    app:layout_constraintTop_toBottomOf="@id/interval_save_button">
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/task_list"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:inputType="none"
+                                            android:lines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/date_picker_button"
+                                    style="@style/TextAppearanceButton"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_marginHorizontal="@dimen/spacing_tightest"
+                                    android:layout_marginTop="@dimen/spacing_tightest"
+                                    android:background="@drawable/bg_circular_20rad_80trp"
+                                    android:foreground="?selectableItemBackground"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/negative_text"
+                                    app:icon="@drawable/ic_bevasarlokocsi"
+                                    app:iconTint="@color/negative_icon"
+                                    app:layout_constraintBottom_toBottomOf="@id/end_time_picker"
+                                    app:layout_constraintEnd_toStartOf="@id/end_time_picker"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/dashboard_project_picker"
+                                    tools:text="2021.09.20" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/start_time_picker"
+                                    style="@style/TextAppearanceHeadline6.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/new_time_intervall_card_item_height"
+                                    android:layout_marginVertical="@dimen/spacing_tightest"
+                                    android:layout_marginStart="@dimen/spacing_tighter"
+                                    android:layout_marginEnd="@dimen/spacing_tightest"
+                                    android:background="@drawable/bg_circular_20rad_80trp"
+                                    android:foreground="?selectableItemBackgroundBorderless"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/negative_text"
+                                    app:icon="@drawable/ic_start"
+                                    app:iconTint="@color/negative_icon"
+                                    app:layout_constraintBottom_toTopOf="@id/end_time_picker"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/date_picker_button"
+                                    app:layout_constraintTop_toBottomOf="@id/dashboard_task_picker"
+                                    tools:text="10:00" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/end_time_picker"
+                                    style="@style/TextAppearanceHeadline6.Bold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/new_time_intervall_card_item_height"
+                                    android:layout_margin="@dimen/spacing_tightest"
+                                    android:background="@drawable/bg_circular_20rad_80trp"
+                                    android:foreground="?selectableItemBackgroundBorderless"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/negative_text"
+                                    app:icon="@drawable/ic_end"
+                                    app:iconTint="@color/negative_icon"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/date_picker_button"
+                                    app:layout_constraintTop_toBottomOf="@id/start_time_picker"
+                                    tools:text="12:00" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/time_intervals_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="-50dp"
+            android:clipToPadding="false"
+            android:paddingTop="50dp"
+            android:paddingBottom="80dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_interval_card"
+            tools:listitem="@layout/cell_time_interval"
+            tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
