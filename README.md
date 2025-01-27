@@ -1,2 +1,2 @@
 # WorkTimeManager.Android
-Szoftverarchitektúrák házi feladat
+Software Architectures homework.
